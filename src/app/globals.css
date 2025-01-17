@@ -3,14 +3,13 @@
 @tailwind utilities;
 @layer base {
   .header {
-    @apply h-96 flex items-end md:items-start xl:items-end md:pt-10 relative pb-10 md:pb-0 ;
+    @apply h-96 flex items-end md:items-start xl:items-end md:pt-10 relative pb-10 md:pb-0;
     background-image: url(../../public/assets/images/gk4cplcv63v61.png);
     background-size: cover;
     background-position-y: 50%;
   }
-  .header_wraper{
+  .header_wraper {
     @apply mb-5 w-fit md:text-5xl text-3xl mx-auto;
-
   }
   .header_wraper h1 {
     @apply text-white text-sm md:text-2xl lg:text-3xl mb-16;
@@ -21,11 +20,11 @@
     letter-spacing: 0.15em; /* Adjust as needed */
     animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
   }
-  .header_img{
+  .header_img {
     @apply active:scale-95 w-[100px] md:w-[200px] rounded-full absolute left-[calc(50%-50px)] -bottom-16 md:left-16 hover:scale-110 transition;
   }
   .header_img-icon {
-    @apply left-2/4 md:left-[180px] -bottom-[80px] md:-bottom-[90px]   ;
+    @apply left-2/4 md:left-[180px] -bottom-[80px] md:-bottom-[90px];
   }
   .header_img-icon svg {
     @apply h-[60px] w-[60px] md:w-[100px] md:h-[100px];
