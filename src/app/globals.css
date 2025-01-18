@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
   .header {
-    @apply h-96 flex items-end md:items-start xl:items-end md:pt-10 relative pb-10 md:pb-0;
+    @apply h-96 flex items-end md:items-start xl:items-end md:pt-20 relative pb-10 md:pb-0;
     background-image: url(../../public/assets/images/gk4cplcv63v61.png);
     background-size: cover;
     background-position-y: 50%;
@@ -30,13 +30,13 @@
     @apply h-[60px] w-[60px] md:w-[100px] md:h-[100px];
   }
   .top_section{
-    @apply h-96 bg-cyan-500 dark:bg-cyan-950 grid grid-cols-3;
+    @apply h-fit p-10 lg:h-96 bg-cyan-500 dark:bg-cyan-950 grid grid-cols-1 lg:grid-cols-3;
   }
     .top_section div{
-      @apply flex flex-col justify-center items-center;
+      @apply flex flex-col justify-center items-center p-6 md:p-0;
     }
     .top_section p{
-      @apply text-white text-3xl;
+    @apply text-white text-3xl text-center;
     }
   
   /* The typing effect */
