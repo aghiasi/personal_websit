@@ -1,9 +1,8 @@
 "use client"
 import { IconButton } from '@mui/material';
 import { Button } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 export default function MenuBtn() {
     const [open,setOpen]= useState(true);
     const menu = ():void=>{

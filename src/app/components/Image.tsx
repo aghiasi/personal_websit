@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import Img from "../../../public/assets/images/93682279.jpg";
-import { useEffect, useRef, useState } from "react";
-import { motion, useScroll } from "motion/react";
+import { useEffect,useState } from "react";
+import { motion} from "motion/react";
 import { useMediaQuery } from "@mui/material";
 export default function HeaderImg() {
   const [top, setTop] = useState<number>();
