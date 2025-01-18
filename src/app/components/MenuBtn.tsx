@@ -5,14 +5,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from 'react';
 export default function MenuBtn() {
-    const [open,setOpen]= useState<boolean>(false);
+    const [open,setOpen]= useState(true);
     const menu = ():void=>{
-        setOpen(!open)
         const menu = document.getElementById("navbar-dropdown")?.classList
         if(open){
+            setOpen(false)
             menu?.remove("-top-80")
             menu?.add( "top-[50px]",)
         }else{
+            setOpen(true)
             menu?.remove("top-[50px]")
             menu?.add("-top-80")
         }
