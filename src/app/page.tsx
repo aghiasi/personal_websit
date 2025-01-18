@@ -1,6 +1,7 @@
 import * as motion from "motion/react-client";
 import GitHub from "./components/GitHub";
 import HeaderImg from "./components/Image";
+import Main from "./components/Main";
 export default function Home() {
   return (
     <>
@@ -13,9 +14,7 @@ export default function Home() {
           <a href="https://github.com/aghiasi"className="header_img header_img-icon"><GitHub /></a>
         </motion.div>
       </header>
-      <main className="h-[2000px]">
-
-      </main>
+      <Main />
     </>
   );
 }
