@@ -10,8 +10,8 @@ export default function ChatBtn() {
   return (
     <>
       <Button
-        className="fixed bottom-3  right-5 z-50 bg-indigo-500 overflow-hidden"
-        sx={{ borderRadius: "100%", width: "65px", height: "65px" }}
+        className="fixed z-50 bg-indigo-500 overflow-hidden"
+        sx={{ borderRadius: "100%", width: "65px", height: "65px", position:"fixed", bottom:6 , right:5 }}
         variant="contained"
         onClick={() => setChange(!change)}
       >
