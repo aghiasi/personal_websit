@@ -1,6 +1,6 @@
 "use client";
 import {  useState } from "react";
-import { div as Div, object } from "motion/react-client";
+import { div as Div  } from "motion/react-client";
 import Image from "next/image";
 import type { Variants } from "motion/react";
 import { CardClickHandle } from "@/libs/cardClick";
