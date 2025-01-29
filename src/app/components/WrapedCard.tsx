@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { div as Div, object } from "motion/react-client";
 import Image from "next/image";
 import type { Variants } from "motion/react";
