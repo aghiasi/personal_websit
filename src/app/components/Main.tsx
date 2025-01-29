@@ -19,7 +19,8 @@ import React from "../../../public/assets/icons/react-2.svg";
 import Redux from "../../../public/assets/icons/redux.svg";
 import Tailwind from "../../../public/assets/icons/tailwind-css-2.svg";
 import Kanda from "../../../public/assets/icons/KandaLogo.png";
-export default function Main() {
+import { fetchGit } from "@/libs/fetchGit";
+export default async function Main() {
   const skill: any[] = [
     Js,
     Ts,
@@ -41,11 +42,12 @@ export default function Main() {
     Kanda,
   ];
   return (
-    <MotionMain className="bg-slate-200">
+    <MotionMain className=" w-full dark:bg-slate-200">
       <TopSection />
-      <section className="container grid grid-cols-1 sm:grid-cols-3 justify-items-center pb-9 ">
+      <section className="container grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 w-screen   justify-items-center pb-9 dark:bg-slate-300">
+        <h3 className="text-[100px] font-mono text-gray-800 col-span-full text-right w-[90%]  ">My Skills</h3>
         {skill.map((item, index) => (
-          <Card img={item} key={index} />
+          <Card img={item} key={index}  />
         ))}
       </section>
     </MotionMain>

@@ -25,7 +25,7 @@ export default function MenuBtn() {
           <Button  href="#"className="block py-2 bg-transparent text-center px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Home</Button>
         </li>
         <li>
-          <Button  href="#"className="block py-2 bg-transparent text-center px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">AboutMe</Button>
+          <Button  href="MySkills"className="block py-2 bg-transparent text-center px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">AboutMe</Button>
         </li>
         <li>
           <Button  href="#"className="block py-2 bg-transparent text-center px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Skills</Button>

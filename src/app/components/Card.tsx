@@ -1,42 +1,49 @@
 import { div as Div } from "motion/react-client";
-import Image from "next/image";
-import type { Variants } from "motion/react"
-import gradient from "random-gradient";
-const cardVariants: Variants = {
-    offscreen: {
-        y: 300,
-    },
-    onscreen: {
-        y: 50,
-        rotate: -10,
-        transition: {
-            type: "spring",
-            bounce: 0.4,
-            duration: 0.8,
-        },
-    },
-    
-}
-export default function Card(prop:any) {
-  const randomNumberGenerator =()=>{
-    const colors = ["green","blue","gray","cyan","white","purple","red","orange","yellow","fuchsia","teal"]
-   const  randomNumb =  Math.floor(Math.random()*10)
-    const random =   gradient(colors[randomNumb])
-    return random ;
-  }
+import { fetchGit } from "@/libs/fetchGit";
+import WrapedCard from "./WrapedCard";
+const darkColors = [
+  "dark:bg-lime-800",
+  "dark:bg-blue-800",
+  "dark:bg-gray-800",
+  "dark:bg-cyan-800",
+  "dark:bg-rose-800",
+  "dark:bg-purple-800",
+  "dark:bg-red-800",
+  "dark:bg-orange-800",
+  "dark:bg-yellow-800",
+  "dark:bg-fuchsia-800",
+  "dark:bg-teal-800",
+];
+const colors = [
+  "bg-lime-400",
+  "bg-blue-400",
+  "bg-gray-400",
+  "bg-cyan-400",
+  "bg-rose-400",
+  "bg-purple-400",
+  "bg-red-400",
+  "bg-orange-400",
+  "bg-yellow-400",
+  "bg-fuchsia-400",
+  "bg-teal-400",
+];
+export default function Card(prop: any) {
+  const randomNumb = Math.floor(Math.random() * 10);
+  const color = colors[randomNumb];
+  const darkColor = darkColors[randomNumb];
   return (
     <>
-    <div className="component ">
-      <Div
-        className="cardContainer relative"
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ amount: 0.8 }}
-      >
-        <div className="splash" style={{background:randomNumberGenerator()}} />
-        <Div variants={cardVariants} whileHover={{scale:1.1,rotate:2}} whileTap={{y:300}}  className="card z-[4] hover:rotate-6"><Image src={prop.img} alt="" width={200} height={200} /> </Div>
-      </Div>
-    </div>
+      <div className="component ">
+        <Div
+          className="cardContainer relative"
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ amount: 0.8 }}
+        >
+          <div className={`splash ${color} ${darkColor}`} />
+          <WrapedCard img={prop.img} gitData={prop.data} />
+        </Div>
+      </div>
     </>
   );
 }

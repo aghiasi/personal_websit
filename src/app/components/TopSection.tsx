@@ -2,7 +2,6 @@ import { section as Section, div as Div } from "motion/react-client";
 import CodeIcon from "@mui/icons-material/Code";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
-import { Divider } from "@mui/material";
 export default function TopSection() {
   return (
     <Section className="top_section">
@@ -22,7 +21,10 @@ export default function TopSection() {
         />
         <p>Love My Family</p>
       </Div>
-      <Divider  className="top-10 col-span-1 md:col-span-3 bg-red-600  left-6 bottom-2 z-30"/>
+      <svg>
+    <path id="blob1" />
+    <path id="blob2"  />
+</svg>
     </Section>
   );
 }

@@ -30,7 +30,7 @@
     @apply h-[60px] w-[60px] md:w-[100px] md:h-[100px];
   }
   .top_section {
-    @apply h-fit p-10 lg:h-[410px] bg-cyan-500 dark:bg-cyan-950 grid grid-cols-1 lg:grid-cols-3 ;
+    @apply h-fit p-10 lg:h-[410px] bg-cyan-500 dark:bg-cyan-950 grid grid-cols-1 lg:grid-cols-3;
   }
   .top_section div {
     @apply flex flex-col justify-center items-center p-6 md:p-0;
@@ -57,14 +57,15 @@
   }
 
   .splash {
-    @apply bg-slate-500;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     border-radius: 20px;
-clip-path:path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z");
+    clip-path: path(
+      "M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z"
+    );
   }
 
   .card {
@@ -77,6 +78,25 @@ clip-path:path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.0
     border-radius: 20px;
     background: #ffffff;
     transform: translateY(50px) rotate(-10deg);
+  }
+  .message_modal {
+    @apply fixed bottom-20 right-16 w-4/5 h-5/6 md:w-4/6 md:h-3/6 xl:w-2/6 xl:h-4/6  shadow-md shadow-gray-500 z-[49] rounded-lg
+    grid 
+    ;
+    background: url(../../public/assets/icons/wp14199734.jpg);
+    background-size: contain;
+  }
+  .admin_message{
+    @apply !bg-slate-50 shadow-slate-500
+    shadow-md !w-[90%] p-5 rounded-md h-fit mx-auto my-5 ;
+  }
+  .user_message{
+    @apply bg-gray-300 shadow-slate-500
+    shadow-md w-[60%] p-5 rounded-md h-fit ml-auto my-5 mr-2 ;
+  }
+  .otheruser_message{
+    @apply bg-green-300 shadow-slate-500
+    shadow-md w-[60%] p-5 rounded-md h-fit ml-2 my-5 col-start-1;
   }
   /* The typing effect */
   @keyframes typing {
@@ -103,4 +123,7 @@ clip-path:path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.0
       background-position-x: 50%;
     }
   }
+}
+#blob2 {
+  visibility: hidden;
 }
