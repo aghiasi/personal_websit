@@ -3,7 +3,6 @@ import {  useState } from "react";
 import { div as Div  } from "motion/react-client";
 import Image from "next/image";
 import type { Variants } from "motion/react";
-import { CardClickHandle } from "@/libs/cardClick";
 const cardVariants: Variants = {
   offscreen: {
     y: 300,
@@ -28,7 +27,7 @@ export default function WrapedCard(prop: any) {
           whileHover={{ scale: 1.1, rotate: 2 }}
           whileTap={{ y: 300 }}
           className="card z-[4] hover:rotate-6 dark:bg-slate-400"
-          onClick={() => CardClickHandle(change, setChange)}
+          onClick={()=>setChange(!change)}
         >
           <Image
             className="select-none"
@@ -44,7 +43,7 @@ export default function WrapedCard(prop: any) {
           whileHover={{ scale: 1.1, rotate: 2 }}
           whileTap={{ y: 300 }}
           className="card z-[4] hover:rotate-6 dark:bg-slate-400"
-          onClick={() => CardClickHandle(change, setChange)}
+          onClick={() =>setChange(!change)}
         >
         </Div>
       )}
