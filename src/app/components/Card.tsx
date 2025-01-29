@@ -1,5 +1,4 @@
 import { div as Div } from "motion/react-client";
-import { fetchGit } from "@/libs/fetchGit";
 import WrapedCard from "./WrapedCard";
 const darkColors = [
   "dark:bg-lime-800",

@@ -19,7 +19,6 @@ import React from "../../../public/assets/icons/react-2.svg";
 import Redux from "../../../public/assets/icons/redux.svg";
 import Tailwind from "../../../public/assets/icons/tailwind-css-2.svg";
 import Kanda from "../../../public/assets/icons/KandaLogo.png";
-import { fetchGit } from "@/libs/fetchGit";
 export default async function Main() {
   const skill: any[] = [
     Js,

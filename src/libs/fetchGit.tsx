@@ -7,7 +7,6 @@ interface something {
   date: string | null;
   language: string;
 }
-let d;
 export const fetchGit = async () => {
   const req = await octokit.request("GET /user/repos", {
     owner: "aghiasi",
