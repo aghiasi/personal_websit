@@ -3,7 +3,7 @@ import { div as Div } from "motion/react-client";
 import { Button, TextField } from "@mui/material";
 import { useRef, useState } from "react";
 import { io } from 'socket.io-client';
-const socket = io("https://seb-sit-socket.vercel.app");
+const socket = io("https://websitsocket.onrender.com");
 const sendMessage = (name: string, text: string) => {
   socket.emit("message", {
     name,
