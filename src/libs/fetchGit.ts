@@ -12,7 +12,7 @@ export const fetchGit = async () => {
     return {
       name: i.name,
       url: i.html_url,
-      date: i.created_at,
+      date: i.created_at.replace(/-/g,"/").replace("T"," ").replace("Z",""),
       language: i.language,
     };
   });

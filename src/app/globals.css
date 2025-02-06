@@ -55,7 +55,6 @@
     padding-top: 20px;
     margin-bottom: -120px;
   }
-
   .splash {
     position: absolute;
     top: 0;
@@ -67,7 +66,6 @@
       "M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z"
     );
   }
-
   .card {
     font-size: 64px;
     width: 300px;
@@ -81,22 +79,33 @@
   }
   .message_modal {
     @apply fixed bottom-20 right-16 w-4/5 h-5/6 md:w-4/6 md:h-3/6 xl:w-2/6 xl:h-4/6  shadow-md shadow-gray-500 z-[49] rounded-lg
-    grid 
-    ;
+    grid;
     background: url(../../public/assets/icons/wp14199734.jpg);
     background-size: contain;
   }
-  .admin_message{
+  .admin_message {
     @apply !bg-slate-50 shadow-slate-500
-    shadow-md !w-[90%] p-5 rounded-md h-fit mx-auto my-5 ;
+    shadow-md !w-[100%] p-5 rounded-md h-fit mx-auto my-5;
   }
-  .user_message{
+  .user_message {
     @apply bg-gray-300 shadow-slate-500
-    shadow-md w-[60%] p-5 rounded-md h-fit ml-auto my-5 mr-2 ;
+    shadow-md !w-[60%] p-5 rounded-md h-fit ml-auto my-5 mr-2 text-wrap;
+    &span {
+      width: 100%;
+      display: block;
+      overflow-wrap: break-word;
+      overflow: scroll;
+    }
   }
-  .otheruser_message{
+  .otheruser_message {
     @apply bg-green-300 shadow-slate-500
-    shadow-md w-[60%] p-5 rounded-md h-fit ml-2 my-5 col-start-1;
+    shadow-md !w-[60%] p-5 rounded-md h-fit ml-2 my-5 col-start-1;
+  }
+  .side_span {
+    display: none;
+  }
+  aside:hover .side_span {
+    display: inline;
   }
   /* The typing effect */
   @keyframes typing {
@@ -107,7 +116,6 @@
       width: 100%;
     }
   }
-
   /* The typewriter cursor effect */
   @keyframes blink-caret {
     from,

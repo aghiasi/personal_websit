@@ -2,7 +2,7 @@
 import { div as Div } from "motion/react-client";
 import { Button, TextField } from "@mui/material";
 import { useRef, useState } from "react";
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 const socket = io("https://websitsocket.onrender.com");
 const sendMessage = (name: string, text: string) => {
   socket.emit("message", {
@@ -16,29 +16,29 @@ const enterRoom = (name: string, room: string) => {
     room,
   });
 };
-export default function MessageBox(prop:any) {
+export default function MessageBox(prop: any) {
   const [user, setUser] = useState({ name: "", room: "" });
   const [show, setShow] = useState<boolean>(false);
-  const [ms,setMs]=useState<any>([])
+  const [ms, setMs] = useState<any>([]);
   const name = useRef<HTMLInputElement | null>(null);
+  const ul = useRef<HTMLUListElement | null>(null);
   const familyName = useRef<HTMLInputElement | null>(null);
   const message = useRef<HTMLInputElement | null>(null);
-socket.on(
-  "message",
-  ({ name, text, time }: { name: string; text: string; time: string }) => {
-    const ul = document.querySelector("ul")
-    const scrollH = ul?.scrollHeight
-    if(ul && scrollH){
-      ul.scrollTo(0,scrollH)
+  socket.on(
+    "message",
+    ({ name, text, time }: { name: string; text: string; time: string }) => {
+      if (ul.current) {
+        const scrollH = ul.current.scrollHeight;
+        if (ul && scrollH) {
+          ul.current.scrollTo(0, scrollH);
+        }
+        setMs([...ms, { name, text, time }]);
+      }
     }
-    setMs( 
-        [...ms , {name,text,time}]
-    )
-  }
-);
+  );
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMs([])
+    setMs([]);
     const inputName = name.current?.value;
     const inputFamilyName = familyName.current?.value;
     if (inputName && inputFamilyName) {
@@ -60,17 +60,29 @@ socket.on(
         animate={{ opacity: [0, 1], x: [1000, 0] }}
         exit={{ opacity: [1, 0], x: [1000, 299] }}
         className={`${!prop.some ? "hidden" : ""} message_modal items-end `}
-        
       >
-        <ul  className="message-box overflow-auto h-full scroll-m-0">
+        <ul ref={ul} className="message-box overflow-auto h-full scroll-m-0">
           {!show && (
             <li className="admin_message">
               <p>to start the chat inter your name and familyname </p>
               <p></p>
             </li>
           )}
-          {ms.map((ms:any,index:number)=>(
-            <li key={index} className={`${ms.name === "Admin"  && "admin_message"} ${ms.name === user.name ? "user_message" : "otheruser_message"}`}>{ms.text}{ms.name}</li>
+          {ms.map((ms: any, index: number) => (
+            <li
+              key={index}
+              className={`${ms.name === "Admin" && "admin_message"} ${
+                ms.name === user.name ? "user_message" : "otheruser_message"
+              } relative pt-6 `}
+            >
+              <span>{ms.text}</span>
+              <span className=" absolute top-1 left-1 text-[12px] text-gray-600">
+                {ms.name}
+              </span>
+              <span className=" absolute bottom-1 right-1 text-[12px] text-gray-400">
+                {ms.time}
+              </span>
+            </li>
           ))}
         </ul>
         {!show && (

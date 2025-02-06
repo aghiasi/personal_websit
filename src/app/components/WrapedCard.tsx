@@ -1,6 +1,6 @@
 "use client";
-import {  useState } from "react";
-import { div as Div  } from "motion/react-client";
+import { useState } from "react";
+import { div as Div } from "motion/react-client";
 import Image from "next/image";
 import type { Variants } from "motion/react";
 const cardVariants: Variants = {
@@ -27,7 +27,7 @@ export default function WrapedCard(prop: any) {
           whileHover={{ scale: 1.1, rotate: 2 }}
           whileTap={{ y: 300 }}
           className="card z-[4] hover:rotate-6 dark:bg-slate-400"
-          onClick={()=>setChange(!change)}
+          onClick={() => setChange(!change)}
         >
           <Image
             className="select-none"
@@ -43,9 +43,8 @@ export default function WrapedCard(prop: any) {
           whileHover={{ scale: 1.1, rotate: 2 }}
           whileTap={{ y: 300 }}
           className="card z-[4] hover:rotate-6 dark:bg-slate-400"
-          onClick={() =>setChange(!change)}
-        >
-        </Div>
+          onClick={() => setChange(!change)}
+        ></Div>
       )}
     </>
   );

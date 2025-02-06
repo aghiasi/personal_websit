@@ -11,31 +11,39 @@ export default function ChatBtn() {
     <>
       <Button
         className="fixed z-50 bg-indigo-500 overflow-hidden"
-        sx={{ borderRadius: "100%", width: "65px", height: "65px", position:"fixed", bottom:6 , right:5 }}
+        sx={{
+          borderRadius: "100%",
+          width: "65px",
+          height: "65px",
+          position: "fixed",
+          bottom: 6,
+          right: 5,
+        }}
         variant="contained"
         onClick={() => setChange(!change)}
       >
         {!change && (
           <Div
-            animate={{ opacity: 1,x:[-100,0] }}
-            exit={{ opacity: 0,x:[0,-100] }}
-            transition={{delay:0.01}}
+            animate={{ opacity: 1, x: [-100, 0] }}
+            exit={{ opacity: 0, x: [0, -100] }}
+            transition={{ delay: 0.01 }}
             key="box"
           >
             <ChatIcon />
           </Div>
-        ) } {change && (
+        )}{" "}
+        {change && (
           <Div
-            animate={{ opacity: 1,x:[100,0] }}
-            exit={{ opacity: 0,x:[0,100] }}
-            transition={{delay:0.01}}
+            animate={{ opacity: 1, x: [100, 0] }}
+            exit={{ opacity: 0, x: [0, 100] }}
+            transition={{ delay: 0.01 }}
             key="box"
           >
             <CloseIcon />
           </Div>
         )}
       </Button>
-       <MessageBox some={change} />
+      <MessageBox some={change} />
     </>
   );
 }
