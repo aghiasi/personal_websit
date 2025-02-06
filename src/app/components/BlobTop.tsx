@@ -5,7 +5,7 @@ export default function BlobTop() {
     <>
       <svg
         id="visual"
-        className=" absolute top-0  z-[-1]"
+        className=" absolute top-0 w-screen z-[-1]"
         viewBox="0 0 960 540"
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"

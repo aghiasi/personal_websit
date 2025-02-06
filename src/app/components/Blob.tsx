@@ -4,7 +4,7 @@ export default function Blob() {
   return (
     <>
       <svg
-        className=" absolute bottom-0   z-[-1]"
+        className=" absolute bottom-0 w-screen  z-[-1]"
         id="visual"
         viewBox="0 0 960 540"
         xmlns="http://www.w3.org/2000/svg"

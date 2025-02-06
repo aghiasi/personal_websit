@@ -48,19 +48,19 @@ export default async function Main() {
     Kanda,
   ];
   return (
-    <MotionMain className=" w-full dark:bg-slate-200">
+    <MotionMain className=" w-screen dark:bg-slate-200">
       <TopSection />
-      <section className="container grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 w-full relative z-[2]   justify-items-center pb-9 dark:bg-slate-300">
+      <section className="container grid grid-cols-1 md:grid-cols-1  xl:grid-cols-3 w-screen relative z-[2]   justify-items-center pb-9 dark:bg-slate-300">
         <BlobTop />
-        <h3 className="text-[80px] font-mono text-gray-800 col-span-full text-right w-[90%]  ">
+        <h3 className="text-[50px] xl:text-[80px] font-mono text-gray-800 col-span-full text-right w-[90%]  ">
           My Skills
         </h3>
         {skill.map((item, index) => (
           <Card img={item} key={index} />
         ))}
-        <div className="mt-16 h-1 bg-slate-400  col-span-3 w-5/6 rounded-sm  mb-6"></div>
+        <div className="mt-16 h-1 bg-slate-400  xl:col-span-3 w-5/6 rounded-sm  mb-6"></div>
 
-        <h3 className="text-[60px] font-mono text-gray-800 col-span-full text-right w-[90%]  ">
+        <h3 className="text-[30px] xl:text-[60px] font-mono text-gray-800 col-span-full text-right w-[90%]  ">
           My Git Repos
         </h3>
         {data.map(async(item, index) => (
