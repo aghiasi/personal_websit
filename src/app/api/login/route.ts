@@ -1,5 +1,5 @@
 "use server";
-const bcrypt = require("bcrypt");
+import * as bcrypt from "bcrypt-ts"
 import { cookies } from "next/headers";
 import * as jose from "jose";
 export const POST = async (req: any) => {

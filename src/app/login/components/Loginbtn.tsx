@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { redirect } from "next/navigation";
 import Alert from "@mui/material/Alert";
 export default function Loginbtn() {

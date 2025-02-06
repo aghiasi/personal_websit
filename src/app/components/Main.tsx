@@ -1,4 +1,4 @@
-import { i, main as MotionMain } from "motion/react-client";
+import {  main as MotionMain } from "motion/react-client";
 import TopSection from "./TopSection";
 import Card from "./Card";
 import Js from "../../../public/assets/icons/logo-javascript.svg";

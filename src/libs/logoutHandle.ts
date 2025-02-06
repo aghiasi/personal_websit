@@ -5,8 +5,10 @@ export const logoutHandle = async () => {
     const request = await fetch("/api/logout", {
       method: "POST",
     });
+    if(request)
     redirectPath = "/";
   } catch (e) {
+    console.log(e)
   } finally {
     redirect(redirectPath);
   }
