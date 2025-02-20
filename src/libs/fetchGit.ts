@@ -8,13 +8,14 @@ export const fetchGit = async () => {
       "X-GitHub-Api-Version": "2022-11-28",
     },
   });
-  const someData = req.data.map((i: any) => {
+  const someData = req.data.map((i: any,index) => {
     return {
       name: i.name,
       url: i.html_url,
-      date: i.created_at.replace(/-/g,"/").replace("T"," ").replace("Z",""),
+      date: i.created_at.replace(/-/g, "/").replace("T", " ").replace("Z", ""),
       language: i.language,
+      allLnag: i.languages_url
     };
   });
-  return someData;
+  return someData ;
 };

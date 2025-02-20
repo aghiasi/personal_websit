@@ -25,6 +25,7 @@ export default function Home() {
         </motion.div>
       </header>
       <Main />
+      <div></div>
       <Footer />
     </>
   );

@@ -1,3 +1,4 @@
+"use client"
 import { div as Div } from "motion/react-client";
 import WrapedCard from "./WrapedCard";
 const darkColors = [
@@ -32,9 +33,9 @@ export default function Card(prop: any) {
   const darkColor = darkColors[randomNumb];
   return (
     <>
-      <div className="component ">
+      <div className="component img-group-container">
         <Div
-          className="cardContainer relative"
+          className="cardContainer relative w-[370px] lg:w-[500px]"
           initial="offscreen"
           whileInView="onscreen"
           viewport={{ amount: 0.8 }}
