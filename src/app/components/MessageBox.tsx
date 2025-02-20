@@ -97,7 +97,7 @@ export default function MessageBox(prop: any) {
               label="FamilyName"
               variant="outlined"
             />
-            <Button type="submit" variant="contained">
+            <Button className="text-[10px] md:text-lg" type="submit" variant="contained">
               Start The Chat
             </Button>
           </form>
