@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import Link from "next/link";
-export default function MenuBtn() {
+export default  function MenuBtn() {
   const [open, setOpen] = useState(true);
   const menu = (): void => {
     const menu = document.getElementById("navbar-dropdown")?.classList;

@@ -11,7 +11,7 @@ export default function Loginbtn() {
     e.preventDefault();
     setShow(true);
     const password: HTMLInputElement | null =
-      document.querySelector("#passwrod");
+      document.querySelector("#password");
     let redictPath: string = "";
     if (password) {
       if (password.value) {
