@@ -1,6 +1,6 @@
 export interface init {
     loading : boolean,
-    data : Array<Object>,
+    data : Array<object>,
     error : string
 }
 export const initialState:init ={

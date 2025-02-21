@@ -2,7 +2,6 @@
 import { getAllLang } from "@/libs/getAllLang";
 import {  ArrowDownward } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import axios from "axios";
 import {  useState } from "react";
 export const AllLang = ({url}:any) => {
   const [getData , setData]= useState<any>();
