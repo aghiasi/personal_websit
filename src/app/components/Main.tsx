@@ -23,7 +23,9 @@ import Blob from "./Blob";
 import BlobTop from "./BlobTop";
 import CardContainer from "./CardContainer";
 import GitSlider from "./GitSlider";
+import { fetchGit } from "@/libs/fetchGit";
 export default async function Main() {
+  const data  = await fetchGit()
   const skill: any[] = [
     Js,
     Ts,
@@ -45,20 +47,14 @@ export default async function Main() {
     Kanda,
   ];
   return (
-    <MotionMain className=" w-screen dark:bg-slate-200">
+    <MotionMain className=" w-screen overflow-hidden dark:bg-slate-200">
       <TopSection />
-      <section className=" relative z-[2]  pb-9 dark:bg-slate-300 ">
+      <section className=" relative z-[2] grid items-center grid-cols-1 sm:grid-cols-2 gap-9 pb-9 dark:bg-slate-300 ">
         <BlobTop />
-        <h3 className="text-[50px] xl:text-[80px] font-mono text-gray-800 col-span-full text-right w-[90%]  ">
-          My Skills
-        </h3>
+        <h1 className=" sm:col-span-2 text-xl text-center mt-5"> my skills and git repos</h1>
         <CardContainer skill={skill} />
-        <div className="mt-16 h-1 bg-slate-400  xl:col-span-3 w-5/6 rounded-sm  mb-6 m-auto"></div>
-        <h3 className="text-[30px] xl:text-[60px] font-mono text-gray-800 col-span-full text-right w-[90%]  ">
-          My Git Repos
-        </h3>
         <div>
-          <GitSlider />
+          <GitSlider some={data} />
         </div>
         <Blob />
       </section>
