@@ -6,9 +6,11 @@ export default function page() {
   const typeChanger = () => {
     const input: HTMLInputElement | null = document.querySelector("#password");
     if (input) {
-      input.type === "password"
-        ? (input.type = "text")
-        : (input.type = "password");
+      if (input.type === "password") {
+        input.type = "text";
+      } else {
+        input.type = "password";
+      }
     }
   };
   return (
