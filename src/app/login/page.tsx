@@ -33,6 +33,7 @@ export default function page() {
                   <IconButton
                     onClick={typeChanger}
                     className="absolute top-1 right-1"
+                    sx={{position:"absolute"}}
                   >
                     <RemoveRedEyeIcon className="  text-gray-400" />
                   </IconButton>
