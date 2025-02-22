@@ -21,7 +21,7 @@
     animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
   }
   .header_img {
-    @apply active:scale-95 w-[100px] md:w-[200px] rounded-full absolute left-[calc(50%-50px)] -bottom-16 md:left-16 hover:scale-110 transition;
+    @apply active:scale-95 w-[100px] md:w-[200px]  rounded-full absolute left-[calc(50%-50px)] -bottom-16 md:left-16 hover:scale-110 transition;
   }
   .header_img-icon {
     @apply left-2/4 md:left-[180px] -bottom-[80px] md:-bottom-[90px];
