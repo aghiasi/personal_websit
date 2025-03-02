@@ -1,7 +1,7 @@
 "use client";
 import { div as Div } from "motion/react-client";
 import { Button, TextField } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 const socket = io("https://websitsocket.onrender.com");
 const sendMessage = (name: string, text: string) => {
@@ -19,6 +19,7 @@ const enterRoom = (name: string, room: string) => {
 export default function MessageBox(prop: any) {
   const [user, setUser] = useState({ name: "", room: "" });
   const [show, setShow] = useState<boolean>(false);
+  const [scrollH, setScrollH] = useState<number | undefined >(0);
   const [ms, setMs] = useState<any>([]);
   const name = useRef<HTMLInputElement | null>(null);
   const ul = useRef<HTMLUListElement | null>(null);
@@ -28,11 +29,8 @@ export default function MessageBox(prop: any) {
     "message",
     ({ name, text, time }: { name: string; text: string; time: string }) => {
       if (ul.current) {
-        const scrollH = ul.current.scrollHeight;
-        if (ul && scrollH) {
-          ul.current.scrollTo(0, scrollH);
-        }
         setMs([...ms, { name, text, time }]);
+         setScrollH(document.querySelector(".message-box")?.scrollHeight);
       }
     }
   );
@@ -54,6 +52,10 @@ export default function MessageBox(prop: any) {
       message.current.value = "";
     }
   };
+  useEffect(()=>{
+    if(scrollH)
+    ul.current?.scrollTo(0,scrollH)
+  },[scrollH])
   return (
     <>
       <Div

@@ -5,7 +5,7 @@ export default function page() {
   return (
     <>
       <Navbar />
-      <section className="bg-white dark:bg-gray-900 h-screen w-screen overflow-hidden mt-16 sm:mt-0">
+      <section className="bg-white dark:bg-gray-900 h-screen w-screen  mt-16 sm:mt-0">
         <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
             Contact Us
