@@ -1,8 +1,8 @@
 import { Octokit } from "@octokit/core";
 const token = process.env.SECRET_GIT_HUB;
 const octokit = new Octokit({
-  auth: token
-})
+  auth: token,
+});
 export const fetchGit = async () => {
   const req = await octokit.request("GET /user/repos", {
     owner: "aghiasi",
@@ -16,8 +16,9 @@ export const fetchGit = async () => {
       url: i.html_url,
       date: i.created_at.replace(/-/g, "/").replace("T", " ").replace("Z", ""),
       language: i.language,
-      allLnag: i.languages_url
+      allLnag: i.languages_url,
+      gitUrl: i.svn_url,
     };
   });
-  return someData ;
+  return someData;
 };

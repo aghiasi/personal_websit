@@ -51,7 +51,7 @@ export default async function Main() {
       <TopSection />
       <section className=" relative z-[2] grid items-center grid-cols-1 sm:grid-cols-2 gap-9 pb-9 dark:bg-slate-300 ">
         <BlobTop />
-        <h1 className=" sm:col-span-2 text-xl text-center mt-5"> my skills and git repos</h1>
+        <h1 className=" sm:col-span-2 text-xl pl-5 text-white mt-5"> my skills and git repos</h1>
         <CardContainer skill={skill} />
         <div>
           <GitSlider some={data} />
