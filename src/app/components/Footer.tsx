@@ -12,10 +12,11 @@ export default function Footer() {
             +989904282582
             </h2>
           </div>
-          <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse items-end">
+          <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse items-end mr-20">
             <a
               href="https://discordapp.com/users/648184362482925598"
               className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              target="blank"
             >
               <svg
                 className="w-4 h-4"
@@ -31,6 +32,7 @@ export default function Footer() {
             <a
               href="https://github.com/aghiasi"
               className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              target="blank"
             >
               <svg
                 className="w-4 h-4"
