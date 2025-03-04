@@ -6,18 +6,13 @@ import { Slide } from "react-slideshow-image";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { getData } from "@/store/git/gitReducer";
-import jQuery from "jquery";
-import { fetchHtml } from "@/libs/fetchHtml";
-import { useState } from "react";
 export default function GitSlider({ some }: any) {
-  const $ = jQuery;
-  const [datashow , setDatashow] = useState('')
   const dispatch = useDispatch<AppDispatch>();
   const gitD = useSelector((state: any) => state.git);
   dispatch(getData(some));
   return (
-    <div className="">
-      <Slide  infinite autoplay transitionDuration={100} duration={6000}>
+    <div>
+      <Slide infinite autoplay transitionDuration={100} duration={6000}>
         {gitD.data &&
           gitD.data.map((item: any, index: number) => (
             <Box
