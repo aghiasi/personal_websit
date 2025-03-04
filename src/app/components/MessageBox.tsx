@@ -19,7 +19,7 @@ const enterRoom = (name: string, room: string) => {
 export default function MessageBox(prop: any) {
   const [user, setUser] = useState({ name: "", room: "" });
   const [show, setShow] = useState<boolean>(false);
-  const [scrollH, setScrollH] = useState<number | undefined >(0);
+  const [scrollH, setScrollH] = useState<number | undefined>(0);
   const [ms, setMs] = useState<any>([]);
   const name = useRef<HTMLInputElement | null>(null);
   const ul = useRef<HTMLUListElement | null>(null);
@@ -29,8 +29,12 @@ export default function MessageBox(prop: any) {
     "message",
     ({ name, text, time }: { name: string; text: string; time: string }) => {
       if (ul.current) {
-        setMs([...ms, { name, text, time }]);
-         setScrollH(document.querySelector(".message-box")?.scrollHeight);
+        if (text != "Admin has left the room") {
+          if (text != "Admin joined the room") {
+            setMs([...ms, { name, text, time }]);
+            setScrollH(document.querySelector(".message-box")?.scrollHeight);
+          }
+        }
       }
     }
   );
@@ -52,10 +56,9 @@ export default function MessageBox(prop: any) {
       message.current.value = "";
     }
   };
-  useEffect(()=>{
-    if(scrollH)
-    ul.current?.scrollTo(0,scrollH)
-  },[scrollH])
+  useEffect(() => {
+    if (scrollH) ul.current?.scrollTo(0, scrollH);
+  }, [scrollH]);
   return (
     <>
       <Div
@@ -99,7 +102,11 @@ export default function MessageBox(prop: any) {
               label="FamilyName"
               variant="outlined"
             />
-            <Button className="text-[10px] md:text-lg" type="submit" variant="contained">
+            <Button
+              className="text-[10px] md:text-lg"
+              type="submit"
+              variant="contained"
+            >
               Start The Chat
             </Button>
           </form>

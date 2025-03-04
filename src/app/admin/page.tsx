@@ -1,11 +1,11 @@
 import Link from "next/link";
-import React from "react";
-export default function page() {
+import ActiveRooms from "./components/ActiveRooms";
+export default function page() {  
   return (
-    <>
+    <section className="grid md:grid-cols-7 gap-5  grid-cols-1">
       <Link
         href={"/admin/inbox"} 
-        className=" mt-10 block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 lg:ml-20"  
+        className=" col-span-3 mt-10 block  p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 lg:ml-20"  
       >
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Inbox Messages
@@ -15,6 +15,7 @@ export default function page() {
           far, in reverse chronological order.
         </p>
       </Link>
-    </>
+      <ActiveRooms /> 
+    </section>
   );
 }
