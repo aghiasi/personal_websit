@@ -2,7 +2,7 @@ import Link from "next/link";
 import ActiveRooms from "./components/ActiveRooms";
 const getMails = async () => {
   try {
-    const request = await fetch("http://localhost:3000/api/mail");
+    const request = await fetch(process.env.BASE_URL+"api/mail");
     if (request.ok) {
       return await request.json();
     }
