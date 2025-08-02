@@ -1,7 +1,26 @@
 "use client";
-import React from "react";
+import React, { FormEvent } from "react";
 import Navbar from "../components/Navbar";
 export default function page() {
+  const submitHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const email: HTMLInputElement | null = document.querySelector("#email");
+    const subject: HTMLInputElement | null = document.querySelector("#subject");
+    const message: HTMLInputElement | null = document.querySelector("#message");
+    fetch("/api/mail", {
+      method: "POST",
+      body: JSON.stringify({
+        email: email?.value,
+        subject: subject?.value,
+        message: message?.value ? message.value : "",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((result) => {
+      console.log(result);
+    });
+  };
   return (
     <>
       <Navbar />
@@ -11,10 +30,10 @@ export default function page() {
             Contact Us
           </h2>
           <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
-             Want to send feedback?
-            Need details about our Business plan? Let us know.
+            Want to send feedback? Need details about our Business plan? Let us
+            know.
           </p>
-          <form className="space-y-8">
+          <form className="space-y-8" onSubmit={submitHandler}>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                 Your email

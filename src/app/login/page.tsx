@@ -1,4 +1,7 @@
 "use client";
+import axios from "axios";
+import { FormEvent, useState } from "react";
+import { redirect } from "next/navigation";
 import { IconButton } from "@mui/material";
 import Loginbtn from "./components/Loginbtn";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -13,6 +16,37 @@ export default function page() {
       }
     }
   };
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState("");
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+    setShow(true);
+    const password: HTMLInputElement | null =
+      document.querySelector("#password");
+    let redictPath: string = "";
+    if (password) {
+      if (password.value) {
+        try {
+          const login = await axios.post("/api/login", {
+            password: password.value,
+          });
+          if (login.status == 200) {
+            redictPath = "/admin";
+          } else {
+            setShow(false);
+            setError("passwrod is wrong");
+            redictPath = "/login";
+          }
+        } catch (e: any) {
+          setShow(false);
+          setError(e.message);
+          redictPath = "/login";
+        } finally {
+          redirect(redictPath);
+        }
+      }
+    }
+  };
   return (
     <>
       <section className="bg-gray-50 h-[100vh] dark:bg-gray-900">
@@ -22,7 +56,10 @@ export default function page() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Login to Admin
               </h1>
-              <form className="space-y-4 md:space-y-6 relative">
+              <form
+                onSubmit={handleLogin}
+                className="space-y-4 md:space-y-6 relative"
+              >
                 <div className=" relative">
                   <input
                     placeholder="password"
@@ -33,12 +70,12 @@ export default function page() {
                   <IconButton
                     onClick={typeChanger}
                     className="absolute top-1 right-1"
-                    sx={{position:"absolute"}}
+                    sx={{ position: "absolute" }}
                   >
                     <RemoveRedEyeIcon className="  text-gray-400" />
                   </IconButton>
                 </div>
-                <Loginbtn />
+                <Loginbtn show={show} error={error} />
               </form>
             </div>
           </div>
