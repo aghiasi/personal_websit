@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
-import { FormEvent, useState } from "react";
+import * as React from "react"
+import { FormEvent} from "react";
 import { redirect } from "next/navigation";
 import { IconButton } from "@mui/material";
 import Loginbtn from "./components/Loginbtn";
@@ -16,8 +17,8 @@ export default function page() {
       }
     }
   };
-  const [show, setShow] = useState(false);
-  const [error, setError] = useState("");
+  const [show, setShow] = React.useState(false);
+  const [error, setError] = React.useState("");
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setShow(true);
