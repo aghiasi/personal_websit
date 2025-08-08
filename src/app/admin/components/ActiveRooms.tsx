@@ -2,7 +2,7 @@
 import { Button  } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
-const socket = io("https://websitsocket.onrender.com");
+const socket = io("https://seb-sit-socket.vercel.app");
 const enterRoom = (e: any, room: string, setUser: any) => {
   setUser(room);
   socket.emit("enterRoom", {
