@@ -5,10 +5,8 @@ export const GET = async (req: NextRequest) => {
   try {
     const filePath = path.join(process.cwd(), "database", "database.json");
     const allJson = await fs.readFile(filePath, "utf8");
-    if(allJson)
-    return new Response(allJson, { status: 200 });
-    else
-    return new Response(JSON.stringify({message:[]}),{status:200})
+    if (allJson) return new Response(allJson, { status: 200 });
+    else return new Response(JSON.stringify({ message: [] }), { status: 200 });
   } catch (e) {
     console.log(e);
   }
@@ -18,12 +16,10 @@ export const POST = async (req: NextRequest) => {
     const data = await req.json();
     const filePath = path.join(process.cwd(), "database", "database.json");
     const allJson = await fs.readFile(filePath, "utf8");
-    const allMessage = JSON.parse(allJson);
-    const newallMessage = [...allMessage.message, data];
-    fs.writeFile(filePath, JSON.stringify(newallMessage)).then((result) => {
-      console.log(result)
+    let allMessage = JSON.parse(allJson);
+    allMessage.push(data)
+    const savedData = await fs.writeFile(filePath, JSON.stringify(allMessage))
       return new Response(JSON.stringify({}), { status: 200 });
-    });
   } catch (e) {
     console.log(e);
   }
