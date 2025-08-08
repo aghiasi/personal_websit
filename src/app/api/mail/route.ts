@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest) => {
     let allMessage = JSON.parse(allJson);
     allMessage.push(data)
     const savedData = await fs.writeFile(filePath, JSON.stringify(allMessage))
-      return new Response(JSON.stringify({}), { status: 200 });
+      return new Response(JSON.stringify(allMessage), { status: 200 });
   } catch (e) {
     console.log(e);
   }
