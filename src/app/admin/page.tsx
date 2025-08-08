@@ -13,6 +13,7 @@ const getMails = async () => {
 };
 export default async function page() {
   const request = await getMails();
+  console.log(request)
   return (
     <section className="grid md:grid-cols-7 gap-5  grid-cols-1">
       <Link

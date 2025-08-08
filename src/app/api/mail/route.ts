@@ -1,14 +1,14 @@
 import { NextRequest } from "next/server";
 import { promises as fs } from "fs";
-import db from "../../../../database/database.json";
 import path from "path";
 export const GET = async (req: NextRequest) => {
-  const request = req;
-  console.log(db, req);
   try {
     const filePath = path.join(process.cwd(), "database", "database.json");
     const allJson = await fs.readFile(filePath, "utf8");
+    if(allJson)
     return new Response(allJson, { status: 200 });
+    else
+    return new Response(JSON.stringify({message:[]}),{status:200})
   } catch (e) {
     console.log(e);
   }
