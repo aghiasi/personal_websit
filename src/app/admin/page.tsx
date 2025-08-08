@@ -13,7 +13,6 @@ const getMails = async () => {
 };
 export default async function page() {
   const request = await getMails();
-  console.log(request)
   return (
     <section className="grid md:grid-cols-7 gap-5  grid-cols-1">
       <Link
@@ -24,7 +23,7 @@ export default async function page() {
           Inbox Messages
         </h5>
         <div className="h-[500px] overflow-y-scroll">
-          {request.message.map((items: any, index: number) => (
+          {request.message && request.message.map((items: any, index: number) => (
             <div
               key={index}
               className="bg-slate-600 p-2 m-1 rounded-lg hover:bg-slate-500"
