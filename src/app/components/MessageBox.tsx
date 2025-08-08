@@ -4,6 +4,7 @@ import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 const socket = io("https://seb-sit-socket.vercel.app");
+
 const sendMessage = (name: string, text: string) => {
   socket.emit("message", {
     name,
