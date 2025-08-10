@@ -43,8 +43,8 @@ export default function AddDay({
           <option value="شنبه">شنبه</option>
           <option value="یکشنبه">یکشنبه</option>
           <option value="دوشنبه">دوشنبه</option>
-          <option value="سه شنبه">سه شنبه</option>
-          <option value="چهار شنبه">چهارشنبه</option>
+          <option value="سه‌شنبه">سه شنبه</option>
+          <option value="چهارشنبه">چهارشنبه</option>
           <option value="پنجشنبه">پنجشنبه</option>
           <option value="جمعه">جمعه</option>
         </select>

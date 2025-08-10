@@ -40,13 +40,13 @@ export default function page() {
         <div
           id="form-ms"
           dir="rtl"
-          className="coll-12 my-2  h-fit p-1 grid grid-cols-6 gap-2"
+          className="coll-12 my-2"
         >
           <label htmlFor="week" className="text-white">
             هفته‌ی :
           </label>
-          <input disabled={addweek} type="number" id="week" />
-          <Button onClick={submitHandler} variant="contained">
+          <input disabled={addweek} type="number" id="week" className="mr-2" />
+          <Button onClick={submitHandler} variant="contained" className="mr-4">
             {!addweek ? "ثبت هفته" : "تغیر هفته"}
           </Button>
         </div>
