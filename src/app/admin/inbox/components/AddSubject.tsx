@@ -45,9 +45,9 @@ export default function AddSubject({ day, res, setres }: any) {
         <AddCircleOutlineIcon />
       </IconButton>
       {show && (
-        <div className="grid grid-cols-6">
+        <div className="grid grid-cols-6 gap-4">
           <select name="study" id={`${day}-study`} className="text-black">
-            <option value="ادبیات">ادبیات</option>
+            <option selected value="ادبیات">ادبیات</option>
             <option value="ریاضی">ریاضی</option>
             <option value="عربی">عربی</option>
             <option value="اقتصاد">اقتصاد</option>

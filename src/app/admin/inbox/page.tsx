@@ -5,6 +5,7 @@ import AddSubject from "./components/AddSubject";
 import AddDay from "./components/AddDay";
 export default function page() {
   const [addweek, setAddweek] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [resivedData, setResivedData] = useState({ week: "0", studys: [] });
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -13,6 +14,7 @@ export default function page() {
       setResivedData({ week: "0", studys: [] });
       setAddweek(!addweek);
       if (!addweek) {
+        setDisabled(!disabled);
         const request = await fetch("/api/addweek", {
           method: "POST",
           headers: {
@@ -22,8 +24,9 @@ export default function page() {
             week: week?.value,
           }),
         });
+        request.ok && setDisabled(false)
         const data = await request.json();
-        console.log(data);
+        console.log(data)
         setResivedData(data);
       }
     }
@@ -37,23 +40,29 @@ export default function page() {
         >
           تایم ترک هلیا خانوم همسر خوشگلم
         </h5>
-        <div
-          id="form-ms"
-          dir="rtl"
-          className="coll-12 my-2"
-        >
+        <div id="form-ms" dir="rtl" className="coll-12 my-2">
           <label htmlFor="week" className="text-white">
             هفته‌ی :
           </label>
           <input disabled={addweek} type="number" id="week" className="mr-2" />
-          <Button onClick={submitHandler} variant="contained" className="mr-4">
+          <Button
+            onClick={submitHandler}
+            variant="contained"
+            className="mr-4"
+            id="week-btn"
+            disabled={disabled}
+          >
             {!addweek ? "ثبت هفته" : "تغیر هفته"}
           </Button>
         </div>
         <div dir="rtl">
           {addweek && (
             <>
-              <AddDay setRes={setResivedData} week={resivedData.week} />
+              <AddDay
+                setRes={setResivedData}
+                week={resivedData.week}
+                dis={disabled}
+              />
               {resivedData &&
                 resivedData.studys.map((items: any) => (
                   <>

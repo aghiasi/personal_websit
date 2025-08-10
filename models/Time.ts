@@ -41,15 +41,8 @@ const weeksSchema = new Schema({
     default: 0,
   },
 });
-weeksSchema.pre("save", function (next) {
-  this.studys.map((item) => {
-    if (item.day_total_hours) {
-      this.totalHours += item.day_total_hours;
-    }
-    if (item.day_total_test) {
-      this.totalTest += item.day_total_test;
-    }
-  });
+weeksSchema.pre("save", async function (next) {
+  this.totalHours = 12;
   next();
 });
 const Tracks = models.Tracks || model("Tracks", weeksSchema);

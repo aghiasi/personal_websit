@@ -4,13 +4,15 @@ import { useState } from "react";
 export default function AddDay({
   week,
   setRes,
+  dis,
 }: {
   week: string;
   setRes: any;
+  dis: any;
 }) {
   const [show, setShow] = useState(false);
   const addDay = async () => {
-    setShow(!show)
+    setShow(!show);
     const selected: HTMLInputElement | null = document.querySelector(
       `#day${week}`
     );
@@ -33,22 +35,28 @@ export default function AddDay({
         variant="contained"
         className="mt-1"
         sx={{ marginBottom: 2 }}
-        onClick={()=>setShow(!show)}
+        onClick={() => setShow(!show)}
+        id="add-day"
+        disabled={dis}
       >
         افزودن روز
       </Button>
       {show && (
         <>
-        <select name="study" id={`day${week}`} className="text-black mr-5">
-          <option value="شنبه">شنبه</option>
-          <option value="یکشنبه">یکشنبه</option>
-          <option value="دوشنبه">دوشنبه</option>
-          <option value="سه‌شنبه">سه شنبه</option>
-          <option value="چهارشنبه">چهارشنبه</option>
-          <option value="پنجشنبه">پنجشنبه</option>
-          <option value="جمعه">جمعه</option>
-        </select>
-        <Button className="mr-5" onClick={addDay} variant="contained">ثبت</Button>
+          <select name="study" id={`day${week}`} className="text-black mr-5">
+            <option selected value="شنبه">
+              شنبه
+            </option>
+            <option value="یکشنبه">یکشنبه</option>
+            <option value="دوشنبه">دوشنبه</option>
+            <option value="سه‌شنبه">سه شنبه</option>
+            <option value="چهارشنبه">چهارشنبه</option>
+            <option value="پنجشنبه">پنجشنبه</option>
+            <option value="جمعه">جمعه</option>
+          </select>
+          <Button className="mr-5" onClick={addDay} variant="contained">
+            ثبت
+          </Button>
         </>
       )}
     </>
