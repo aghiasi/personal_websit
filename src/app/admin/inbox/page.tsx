@@ -24,9 +24,9 @@ export default function page() {
             week: week?.value,
           }),
         });
-        request.ok && setDisabled(false)
+        if (request.ok) setDisabled(false);
         const data = await request.json();
-        console.log(data)
+        console.log(data);
         setResivedData(data);
       }
     }
