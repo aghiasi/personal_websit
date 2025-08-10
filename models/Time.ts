@@ -45,5 +45,5 @@ weeksSchema.pre("save", async function (next) {
   this.totalHours = 12;
   next();
 });
-const Tracks = models.Tracks || model("Tracks", weeksSchema);
+const Tracks =  model("Tracks", weeksSchema);
 export default Tracks;
