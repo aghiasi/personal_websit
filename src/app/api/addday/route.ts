@@ -6,20 +6,23 @@ export const POST = async (req: Request) => {
   const find = await Tracks.findOne({
     week: data.week,
   });
-  const condition = find.studys.filter((i: any) => i.day === data.day);
-  if (condition.length <= 0) {
-    const updateData = await Tracks.findOneAndUpdate(
-      { week: data.week },
-      {
-        $push: {
-          studys: {
-            day: data.day,
-            subjects: [],
+  if (find) {
+    const condition = find.studys.filter((i: any) => i.day === data.day);
+    if (condition.length <= 0) {
+      const updateData = await Tracks.findOneAndUpdate(
+        { week: data.week },
+        {
+          $push: {
+            studys: {
+              day: data.day,
+              subjects: [],
+            },
           },
-        },
-      }
-    );
-    updateData.save();
+        }
+      );
+      if(updateData)
+      updateData.save();
+    }
     const newData = await Tracks.findOne({ week: data.week });
     return new Response(JSON.stringify(newData), { status: 201 });
   } else {
