@@ -15,7 +15,7 @@ export default function Loginbtn({
           {error}
         </Alert>
       )}
-      <Button variant="contained" className="w-full">
+      <Button type="submit" variant="contained" className="w-full">
         {show ? <CircularProgress color="inherit" /> : "Login"}
       </Button>
     </>
