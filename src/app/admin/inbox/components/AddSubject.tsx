@@ -8,7 +8,6 @@ export default function AddSubject({ day, res, setres }: any) {
     setShow(!show);
   };
   const submitHandler = async () => {
-    let newres = res;
     const name: HTMLInputElement | null = document.querySelector(
       `#${day}-study`
     );

@@ -6,7 +6,7 @@ export default function AddDay({
   setRes,
 }: {
   week: string;
-  setRes: Function;
+  setRes: any;
 }) {
   const [show, setShow] = useState(false);
   const addDay = async () => {
