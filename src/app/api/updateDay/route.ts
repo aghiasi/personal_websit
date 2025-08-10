@@ -13,6 +13,7 @@ export const POST = async (req: Request) => {
     },
     { arrayFilters: [{ "study.day": data.day }], upsert: true }
   );
+  if(updateData)
   updateData.save();
   const newData = await Tracks.findOne({week:data.week})
   return new Response(JSON.stringify(newData), { status: 201 });
