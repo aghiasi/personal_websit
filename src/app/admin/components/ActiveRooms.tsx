@@ -43,7 +43,6 @@ export default function ActiveRooms() {
     "toAdmin",
     ({ name, text, time }: { name: string; text: string; time: string }) => {
       if (ul.current) {
-        console.log(text);
         if (text != "wellcome to chat app") {
           setMs([...ms, { name, text, time }]);
           setScrollH(document.querySelector(".message-box")?.scrollHeight);

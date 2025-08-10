@@ -17,9 +17,7 @@ export default function page() {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((result) => {
-      console.log(result);
-    });
+    })
   };
   return (
     <>

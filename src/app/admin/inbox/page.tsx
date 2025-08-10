@@ -1,6 +1,89 @@
-import React from 'react'
+"use client";
+import { Button, IconButton } from "@mui/material";
+import React, { FormEvent, useState } from "react";
+import AddSubject from "./components/AddSubject";
+import AddDay from "./components/AddDay";
 export default function page() {
+  const [addweek, setAddweek] = useState(false);
+  const [resivedData, setResivedData] = useState({ week: "0", studys: [] });
+  const submitHandler = async (e: FormEvent) => {
+    e.preventDefault();
+    const week: HTMLInputElement | null = document.querySelector("#week");
+    if (week?.value) {
+      setResivedData({ week: "0", studys: [] });
+      setAddweek(!addweek);
+      if (!addweek) {
+        const request = await fetch("/api/addweek", {
+          method: "POST",
+          headers: {
+            "Content-type": "Application-json",
+          },
+          body: JSON.stringify({
+            week: week?.value,
+          }),
+        });
+        const data = await request.json();
+        console.log(data);
+        setResivedData(data);
+      }
+    }
+  };
   return (
-    <div>page</div>
-  )
+    <section className="grid md:grid-cols-7 gap-5  grid-cols-1">
+      <div className="col-span-4 md:ml-40  sm:mr-4 mt-10 block  p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
+        <h5
+          dir="rtl"
+          className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+        >
+          تایم ترک هلیا خانوم همسر خوشگلم
+        </h5>
+        <div
+          id="form-ms"
+          dir="rtl"
+          className="coll-12 my-2  h-fit p-1 grid grid-cols-6 gap-2"
+        >
+          <label htmlFor="week" className="text-white">
+            هفته‌ی :
+          </label>
+          <input disabled={addweek} type="number" id="week" />
+          <Button onClick={submitHandler} variant="contained">
+            {!addweek ? "ثبت هفته" : "تغیر هفته"}
+          </Button>
+        </div>
+        <div dir="rtl">
+          {addweek && (
+            <>
+              <AddDay setRes={setResivedData} week={resivedData.week} />
+              {resivedData &&
+                resivedData.studys.map((items: any) => (
+                  <>
+                    <p className="text-white mb-2">
+                      {items.day}{" "}
+                      <AddSubject
+                        day={items.day}
+                        res={resivedData}
+                        setres={setResivedData}
+                      />
+                    </p>
+                    {items.subjects.map((item: any, index: number) => (
+                      <div
+                        className="grid grid-cols-5"
+                        id={`item-div-${items.day}-${index}`}
+                        key={index}
+                      >
+                        <p className="text-white">{item.name}</p>
+                        <p className="text-white">ساعت</p>
+                        <p className="text-white">{item.hours}</p>
+                        <p className="text-white">تست</p>
+                        <p className="text-white">{item.test}</p>
+                      </div>
+                    ))}
+                  </>
+                ))}
+            </>
+          )}
+        </div>
+      </div>
+    </section>
+  );
 }
