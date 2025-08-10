@@ -6,6 +6,7 @@ export default function AddSubject({ day, res, setres }: any) {
   const [show, setShow] = useState(false);
   const toggle = () => {
     setShow(!show);
+    
   };
   const submitHandler = async () => {
     const name: HTMLInputElement | null = document.querySelector(
