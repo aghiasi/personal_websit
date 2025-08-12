@@ -2,7 +2,7 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Button, IconButton } from "@mui/material";
 import { useState } from "react";
-export default function AddSubject({ day, res, setres }: any) {
+export default function AddSubject({ day, res, setres ,setChartData}: any) {
   const [show, setShow] = useState(false);
   const toggle = () => {
     setShow(!show);
@@ -44,6 +44,29 @@ export default function AddSubject({ day, res, setres }: any) {
       });
       const updateData = await updateDay.json();
       setres(updateData);
+        let studeiss: string[] = [];
+        let hourss: number[] = [];
+        let tests:number[] = [];
+        updateData.totalGraph.map((i: any) => {
+          if (i.name) studeiss.push(i.name.toString());
+          hourss.push(parseFloat(i.hours));
+          tests.push(i.test);
+        });
+        setChartData({
+          labels: studeiss,
+          datasets: [
+        {
+          label: 'درس بر حسب ساعت ',
+          data: hourss,
+
+        },
+        {
+          label: 'درس بر حسب تست',
+          data: tests,
+
+        },
+          ],
+        });
       setShow(!show);
     }
   };
