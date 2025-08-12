@@ -1,5 +1,5 @@
-import connectDB from "../../../../config/database";
-import Tracks from "../../../../models/Time";
+import connectDB from "../../../config/database";
+import Tracks from "../../../models/Time";
 export const POST = async (req: Request) => {
   try {
     await connectDB();

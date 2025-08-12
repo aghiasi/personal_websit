@@ -4,10 +4,11 @@ const subject = new Schema({
     type: String,
   },
   hours: {
-    type: Number,
+    type: String,
   },
   test: {
     type: Number,
+    default: 0,
   },
 });
 const trackSchema = new Schema({
@@ -20,8 +21,8 @@ const trackSchema = new Schema({
     default: 0,
   },
   day_total_hours: {
-    type: Number,
-    default: 0,
+    type: Schema.Types.Decimal128,
+    default: 0.0,
   },
 });
 const weeksSchema = new Schema({
@@ -37,13 +38,17 @@ const weeksSchema = new Schema({
     default: 0,
   },
   totalHours: {
-    type: Number,
-    default: 0,
+    type: Schema.Types.Decimal128,
+    default: 0.0,
   },
+  totalGraph:{
+    type:[subject],
+    default:[]
+  }
 });
-weeksSchema.pre("save", async function (next) {
-  this.totalHours = 12;
+weeksSchema.pre("findOneAndUpdate", async function (next) {
+  const update = await this.model.findOne(this.getQuery());
   next();
 });
-const Tracks =  model("Tracks", weeksSchema);
+const Tracks = models.Tracks || model("Tracks", weeksSchema);
 export default Tracks;

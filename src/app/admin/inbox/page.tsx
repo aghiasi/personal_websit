@@ -33,10 +33,10 @@ export default function page() {
   };
   return (
     <section className="grid md:grid-cols-7 gap-5  grid-cols-1">
-      <div className="col-span-4 md:ml-40  sm:mr-4 mt-10 block  p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
+      <div className="col-span-4 md:ml-40  sm:mr-4 mt-10 block  p-6  border  rounded-lg shadow-sm  bg-gray-800 border-gray-700 hover:bg-gray-700 ">
         <h5
           dir="rtl"
-          className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          className="mb-2 text-2xl font-bold tracking-tight  text-white"
         >
           تایم ترک هلیا خانوم همسر خوشگلم
         </h5>
@@ -65,15 +65,17 @@ export default function page() {
               />
               {resivedData &&
                 resivedData.studys.map((items: any) => (
-                  <>
-                    <p className="text-white mb-2">
+                  <div key={items.day}>
+                    <div className="text-white mb-2">
                       {items.day}{" "}
                       <AddSubject
                         day={items.day}
                         res={resivedData}
                         setres={setResivedData}
                       />
-                    </p>
+                      <p>کل ساعت مطالعه شد در این روز :{items.day_total_hours.$numberDecimal}</p>
+                      <p>کل تست های زده شد در این روز :{items.day_total_test}</p>
+                    </div>
                     {items.subjects.map((item: any, index: number) => (
                       <div
                         className="grid grid-cols-5"
@@ -87,7 +89,7 @@ export default function page() {
                         <p className="text-white">{item.test}</p>
                       </div>
                     ))}
-                  </>
+                  </div>
                 ))}
             </>
           )}

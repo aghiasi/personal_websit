@@ -6,7 +6,6 @@ export default function AddSubject({ day, res, setres }: any) {
   const [show, setShow] = useState(false);
   const toggle = () => {
     setShow(!show);
-    
   };
   const submitHandler = async () => {
     const name: HTMLInputElement | null = document.querySelector(
@@ -19,13 +18,21 @@ export default function AddSubject({ day, res, setres }: any) {
       `#${day}-test`
     );
     if (name && hours && test) {
+      if (parseFloat(hours.value) % 1 !== 0) {
+        const dec =
+          parseFloat(hours.value) - Math.floor(parseFloat(hours.value));
+        if (dec >= 0.6) {
+          const round = parseFloat(hours.value) - 0.6;
+          hours.value = (1 + parseFloat(round.toFixed(2))).toString();
+        }
+      }
       const newStudy = {
         week: res.week,
         day,
         data: {
           name: name.value,
-          hours: parseInt(hours.value),
-          test: parseInt(test.value),
+          hours: parseFloat(hours.value) ? hours.value : "1",
+          test: test.value ? parseInt(test.value) : 0,
         },
       };
       const updateDay = await fetch("/api/updateDay", {
@@ -37,7 +44,7 @@ export default function AddSubject({ day, res, setres }: any) {
       });
       const updateData = await updateDay.json();
       setres(updateData);
-      setShow(!show)
+      setShow(!show);
     }
   };
   return (
@@ -48,7 +55,9 @@ export default function AddSubject({ day, res, setres }: any) {
       {show && (
         <div className="grid grid-cols-6 gap-4">
           <select name="study" id={`${day}-study`} className="text-black">
-            <option selected value="ادبیات">ادبیات</option>
+            <option defaultChecked value="ادبیات">
+              ادبیات
+            </option>
             <option value="ریاضی">ریاضی</option>
             <option value="عربی">عربی</option>
             <option value="اقتصاد">اقتصاد</option>
@@ -59,7 +68,12 @@ export default function AddSubject({ day, res, setres }: any) {
             <option value="علوم فنون">فنون</option>
           </select>
           <label htmlFor=""> ساعت :</label>
-          <input type="number" className="text-black" id={`${day}-hours`} />
+          <input
+            type="number"
+            className="text-black"
+            id={`${day}-hours`}
+            step={"any"}
+          />
           <label htmlFor=""> تست :</label>
           <input type="number" className="text-black" id={`${day}-test`} />
           <Button variant="contained" onClick={submitHandler}>

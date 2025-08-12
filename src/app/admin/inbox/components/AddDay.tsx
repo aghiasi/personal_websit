@@ -44,7 +44,7 @@ export default function AddDay({
       {show && (
         <>
           <select name="study" id={`day${week}`} className="text-black mr-5">
-            <option selected value="شنبه">
+            <option defaultChecked value="شنبه">
               شنبه
             </option>
             <option value="یکشنبه">یکشنبه</option>
