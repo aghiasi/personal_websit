@@ -4,7 +4,7 @@ const subject = new Schema({
     type: String,
   },
   hours: {
-    type: String,
+    type: Schema.Types.Decimal128,
   },
   test: {
     type: Number,

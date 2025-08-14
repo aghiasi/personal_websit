@@ -19,6 +19,7 @@ export const POST = async (req: Request) => {
       filtering.test += data.data.test;
       const alltimer = parseFloat(filtering.hours) + parseFloat(data.data.hours);
       filtering.hours = formater(alltimer)
+      console.log(filtering)
     } else {
       graph.push(data.data);
     }

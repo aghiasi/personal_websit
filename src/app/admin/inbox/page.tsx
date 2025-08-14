@@ -3,7 +3,7 @@ import { Button, IconButton } from "@mui/material";
 import React, { FormEvent, useState } from "react";
 import AddSubject from "./components/AddSubject";
 import AddDay from "./components/AddDay";
-import { Doughnut } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,8 +14,10 @@ import {
   Tooltip,
   Legend,
   ArcElement,
-  Colors
+  Colors,
+  BarElement,
 } from "chart.js";
+import { copyText } from "@/libs/copyText";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,8 +26,9 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ArcElement ,
-  Colors
+  ArcElement,
+  Colors,
+  BarElement
 );
 export default function page() {
   const [addweek, setAddweek] = useState(false);
@@ -39,14 +42,24 @@ export default function page() {
       },
     ],
   });
-  const [resivedData, setResivedData] = useState({ week: "0", studys: [] });
+  const [resivedData, setResivedData] = useState({
+    week: "0",
+    studys: [],
+    totalTest: 0,
+    totalHours: { $numberDecimal: 0 },
+  });
   let theChart;
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
     const week: HTMLInputElement | null = document.querySelector("#week");
     const chart: HTMLCanvasElement | null = document.querySelector("#chart");
     if (week?.value) {
-      setResivedData({ week: "0", studys: [] });
+      setResivedData({
+        week: "0",
+        studys: [],
+        totalTest: 0,
+        totalHours: { $numberDecimal: 0 },
+      });
       setAddweek(!addweek);
       if (!addweek) {
         setDisabled(!disabled);
@@ -64,29 +77,31 @@ export default function page() {
         setResivedData(data);
         let studeis: string[] = [];
         let hours: number[] = [];
-        let test :number[] = [];
+        let test: number[] = [];
         data.totalGraph.map((i: any) => {
           if (i.name) studeis.push(i.name.toString());
-          hours.push(parseFloat(i.hours));
+          hours.push(parseFloat(i.hours.$numberDecimal));
           test.push(i.test);
         });
         setChartData({
           labels: studeis,
-      datasets: [
-        {
-          label: 'درس بر حسب ساعت ',
-          data: hours,
-
-        },
-        {
-          label: 'درس بر حسب تست',
-          data: test,
-
-        },
-      ],
+          datasets: [
+            {
+              label: "درس بر حسب ساعت ",
+              data: hours,
+            },
+            {
+              label: "درس بر حسب تست",
+              data: test,
+            },
+          ],
         });
       }
     }
+  };
+  const copy = async () => {
+    const out = copyText(resivedData);
+    if (out) await navigator.clipboard.writeText(out);
   };
   return (
     <section className="grid md:grid-cols-7 gap-5  grid-cols-1">
@@ -115,6 +130,14 @@ export default function page() {
         <div dir="rtl">
           {addweek && (
             <>
+              <Button variant="contained" onClick={copy}>دریافت متن خروجی</Button>
+              <p className="text-white">
+                کل ساعات مطالعه این هفته :
+                {resivedData.totalHours.$numberDecimal}
+              </p>
+              <p className="text-white">
+                کل تست های زده شده این هفته :{resivedData.totalTest}
+              </p>
               <AddDay
                 setRes={setResivedData}
                 week={resivedData.week}
@@ -147,7 +170,9 @@ export default function page() {
                       >
                         <p className="text-white">{item.name}</p>
                         <p className="text-white">ساعت</p>
-                        <p className="text-white">{item.hours}</p>
+                        <p className="text-white">
+                          {item.hours.$numberDecimal}
+                        </p>
                         <p className="text-white">تست</p>
                         <p className="text-white">{item.test}</p>
                       </div>
@@ -159,7 +184,7 @@ export default function page() {
         </div>
       </div>
       <div className="col-span-4 md:ml-40  sm:mr-4 mt-10 block  p-6  border  rounded-lg mb-5">
-        <Doughnut  data={chartData} />
+        <Bar data={chartData} />
       </div>
     </section>
   );

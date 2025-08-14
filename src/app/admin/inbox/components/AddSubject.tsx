@@ -49,7 +49,7 @@ export default function AddSubject({ day, res, setres ,setChartData}: any) {
         let tests:number[] = [];
         updateData.totalGraph.map((i: any) => {
           if (i.name) studeiss.push(i.name.toString());
-          hourss.push(parseFloat(i.hours));
+          hourss.push(parseFloat(i.hours.$numberDecimal));
           tests.push(i.test);
         });
         setChartData({
