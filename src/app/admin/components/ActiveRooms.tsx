@@ -1,8 +1,8 @@
 "use client";
-import { Button  } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
-const socket = io("https://seb-sit-socket.vercel.app");
+const socket = io("https://websitsocket.onrender.com/");
 const enterRoom = (e: any, room: string, setUser: any) => {
   setUser(room);
   socket.emit("enterRoom", {
@@ -48,7 +48,7 @@ export default function ActiveRooms() {
           setScrollH(document.querySelector(".message-box")?.scrollHeight);
         }
       }
-    }
+    },
   );
   return (
     <div className="col-span-4  sm:mr-4 mt-10 block  p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
@@ -62,7 +62,7 @@ export default function ActiveRooms() {
             variant="outlined"
             key={room}
             className="font-normal text-gray-700 dark:text-gray-400"
-            onClick={(e) => enterRoom(e, room,setUser)}
+            onClick={(e) => enterRoom(e, room, setUser)}
           >
             {room}
           </Button>
@@ -95,7 +95,11 @@ export default function ActiveRooms() {
           className="col-span-2 text-white bg-inherit border"
           ref={message}
         />
-        <Button type="submit" variant="outlined" sx={{color:"white", border:"1px solid white"}}>
+        <Button
+          type="submit"
+          variant="outlined"
+          sx={{ color: "white", border: "1px solid white" }}
+        >
           send
         </Button>
       </form>
