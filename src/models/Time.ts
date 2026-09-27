@@ -28,7 +28,7 @@ const trackSchema = new Schema({
 const weeksSchema = new Schema({
   week: {
     type: String,
-    require,
+    required: true,
   },
   studys: {
     type: [trackSchema],
@@ -41,10 +41,10 @@ const weeksSchema = new Schema({
     type: Schema.Types.Decimal128,
     default: 0.0,
   },
-  totalGraph:{
-    type:[subject],
-    default:[]
-  }
+  totalGraph: {
+    type: [subject],
+    default: [],
+  },
 });
 weeksSchema.pre("findOneAndUpdate", async function (next) {
   const update = await this.model.findOne(this.getQuery());
