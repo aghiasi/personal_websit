@@ -1,54 +1,166 @@
-import React from "react";
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-900">
-      <div className="mx-auto w-full max-w-screen-xl">
-        <div className="flex px-4 py-6 lg:py-8  justify-between">
-          <div className="flex gap-3">
-            <h2 className="text-sm font-semibold text-gray-900 uppercase dark:text-white">
-              Contact Me 
-            </h2>
-            <h2 className="text-sm font-semibold text-gray-900 uppercase dark:text-white">
-            +989904282582
-            </h2>
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#070b12]">
+      {/* Subtle background glow */}
+      <div
+        className="pointer-events-none absolute -top-32 left-1/2
+                   h-64 w-64 -translate-x-1/2 rounded-full
+                   bg-sky-500/10 blur-3xl"
+      />
+
+      <div className="site-container relative">
+        <div className="py-12">
+          {/* Main footer */}
+          <div className="flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
+            {/* Brand / introduction */}
+            <div className="max-w-md">
+              <div className="mb-3 flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.8)]" />
+
+                <span className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300">
+                  Available for projects
+                </span>
+              </div>
+
+              <h2 className="text-2xl font-semibold tracking-tight text-white">
+                Let&apos;s build something
+                <span className="text-sky-300"> together.</span>
+              </h2>
+
+              <p className="mt-3 text-sm leading-6 text-gray-400">
+                I&apos;m a programmer and application developer interested in
+                software development, modern web applications, enterprise
+                systems, and interesting technical projects.
+              </p>
+            </div>
+
+            {/* Contact */}
+            <div className="flex flex-col gap-3">
+              <a
+                href="mailto:ghaisikhamene@gmail.com"
+                className="group flex items-center gap-3 text-sm text-gray-300 transition-colors hover:text-sky-300"
+              >
+                <span
+                  className="flex h-9 w-9 items-center justify-center rounded-lg
+                             border border-white/10 bg-white/5
+                             transition-all group-hover:border-sky-400/30
+                             group-hover:bg-sky-400/10"
+                >
+                  <svg
+                    className="h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 7.5 12 13l9-5.5M4.5 19.5h15A1.5 1.5 0 0 0 21 18V6a1.5 1.5 0 0 0-1.5-1.5h-15A1.5 1.5 0 0 0 3 6v12a1.5 1.5 0 0 0 1.5 1.5Z"
+                    />
+                  </svg>
+                </span>
+                ghaisikhamene@gmail.com
+              </a>
+
+              <a
+                href="tel:+989904282582"
+                className="group flex items-center gap-3 text-sm text-gray-400 transition-colors hover:text-sky-300"
+              >
+                <span
+                  className="flex h-9 w-9 items-center justify-center rounded-lg
+                             border border-white/10 bg-white/5
+                             transition-all group-hover:border-sky-400/30
+                             group-hover:bg-sky-400/10"
+                >
+                  <svg
+                    className="h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6.5 3.5h3l1.5 4-2 1.5a14.5 14.5 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5Z"
+                    />
+                  </svg>
+                </span>
+                +98 990 428 2582
+              </a>
+            </div>
+
+            {/* Social links */}
+            <div className="flex items-center gap-3">
+              <a
+                href="https://github.com/aghiasi"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="group flex h-11 w-11 items-center justify-center rounded-xl
+                           border border-white/10 bg-white/5
+                           text-gray-400 transition-all duration-200
+                           hover:-translate-y-0.5 hover:border-sky-400/30
+                           hover:bg-sky-400/10 hover:text-sky-300"
+              >
+                <svg
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.46 11.46 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.13 3.17.76.84 1.22 1.91 1.22 3.22 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </a>
+
+              <a
+                href="https://discordapp.com/users/648184362482925598"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Discord"
+                className="group flex h-11 w-11 items-center justify-center rounded-xl
+                           border border-white/10 bg-white/5
+                           text-gray-400 transition-all duration-200
+                           hover:-translate-y-0.5 hover:border-sky-400/30
+                           hover:bg-sky-400/10 hover:text-sky-300"
+              >
+                <svg
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M19.54 4.11A16.87 16.87 0 0 0 15.25 2.8l-.52 1.05a15.8 15.8 0 0 0-5.46 0L8.75 2.8a16.8 16.8 0 0 0-4.3 1.31C1.73 8.18 1 12.15 1.36 16.07a17.2 17.2 0 0 0 5.28 2.66l1.28-1.74c-.7-.26-1.37-.58-2-.96l.49-.38c3.85 1.8 8.02 1.8 11.82 0l.5.38c-.64.38-1.31.7-2.01.96L18 18.73a17.17 17.17 0 0 0 5.28-2.66c.42-4.55-.72-8.48-3.74-11.96ZM8.05 13.84c-1.15 0-2.1-1.06-2.1-2.36s.93-2.36 2.1-2.36c1.18 0 2.12 1.06 2.1 2.36 0 1.3-.93 2.36-2.1 2.36Zm7.9 0c-1.16 0-2.1-1.06-2.1-2.36s.93-2.36 2.1-2.36 2.1 1.06 2.1 2.36-.93 2.36-2.1 2.36Z" />
+                </svg>
+              </a>
+            </div>
           </div>
-          <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse items-end mr-20">
-            <a
-              href="https://discordapp.com/users/648184362482925598"
-              className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
-              target="blank"
-            >
-              <svg
-                className="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 21 16"
-              >
-                <path d="M16.942 1.556a16.3 16.3 0 0 0-4.126-1.3 12.04 12.04 0 0 0-.529 1.1 15.175 15.175 0 0 0-4.573 0 11.585 11.585 0 0 0-.535-1.1 16.274 16.274 0 0 0-4.129 1.3A17.392 17.392 0 0 0 .182 13.218a15.785 15.785 0 0 0 4.963 2.521c.41-.564.773-1.16 1.084-1.785a10.63 10.63 0 0 1-1.706-.83c.143-.106.283-.217.418-.33a11.664 11.664 0 0 0 10.118 0c.137.113.277.224.418.33-.544.328-1.116.606-1.71.832a12.52 12.52 0 0 0 1.084 1.785 16.46 16.46 0 0 0 5.064-2.595 17.286 17.286 0 0 0-2.973-11.59ZM6.678 10.813a1.941 1.941 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.919 1.919 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Zm6.644 0a1.94 1.94 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.918 1.918 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Z" />
-              </svg>
-              <span className="sr-only">Discord community</span>
-            </a>
-            <a
-              href="https://github.com/aghiasi"
-              className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
-              target="blank"
-            >
-              <svg
-                className="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span className="sr-only">GitHub account</span>
-            </a>
+
+          {/* Bottom */}
+          <div
+            className="mt-10 flex flex-col gap-3 border-t border-white/10
+                       pt-6 text-xs text-gray-500 sm:flex-row
+                       sm:items-center sm:justify-between"
+          >
+            <p>
+              © {new Date().getFullYear()}{" "}
+              <span className="text-gray-400">Ali Ghiasi</span>. All rights
+              reserved.
+            </p>
+
+            <div className="flex items-center gap-2">
+              <span>Built with</span>
+              <span className="text-gray-400">Next.js</span>
+              <span className="text-gray-700">•</span>
+              <span className="text-gray-400">TypeScript</span>
+              <span className="text-gray-700">•</span>
+              <span className="text-gray-400">React</span>
+            </div>
           </div>
         </div>
       </div>

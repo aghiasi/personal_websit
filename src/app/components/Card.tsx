@@ -1,49 +1,59 @@
-"use client"
-import { div as Div } from "motion/react-client";
+"use client";
+
 import WrapedCard from "./WrapedCard";
-const darkColors = [
-  "dark:bg-lime-800",
-  "dark:bg-blue-800",
-  "dark:bg-gray-800",
-  "dark:bg-cyan-800",
-  "dark:bg-rose-800",
-  "dark:bg-purple-800",
-  "dark:bg-red-800",
-  "dark:bg-orange-800",
-  "dark:bg-yellow-800",
-  "dark:bg-fuchsia-800",
-  "dark:bg-teal-800",
-];
-const colors = [
-  "bg-lime-400",
-  "bg-blue-400",
-  "bg-gray-400",
-  "bg-cyan-400",
-  "bg-rose-400",
-  "bg-purple-400",
-  "bg-red-400",
-  "bg-orange-400",
-  "bg-yellow-400",
-  "bg-fuchsia-400",
-  "bg-teal-400",
-];
-export default function Card(prop: any) {
-  const randomNumb = Math.floor(Math.random() * 10);
-  const color = colors[randomNumb];
-  const darkColor = darkColors[randomNumb];
+
+interface CardProps {
+  img: any;
+  data?: any;
+}
+
+export default function Card({ img, data }: CardProps) {
   return (
-    <>
-      <div className="component img-group-container">
-        <Div
-          className="cardContainer relative w-[370px] lg:w-[500px]"
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ amount: 0.8 }}
-        >
-          <div className={`splash ${color} ${darkColor}`} />
-          <WrapedCard img={prop.img} gitData={prop.data} />
-        </Div>
+    <div className="group relative flex w-full items-center justify-center">
+      {/* Background glow */}
+      <div
+        className="
+          pointer-events-none absolute
+          h-56 w-56
+          rounded-full
+          bg-sky-400/10
+          blur-3xl
+          transition-all duration-500
+          group-hover:bg-sky-400/20
+          group-hover:scale-110
+        "
+      />
+
+      {/* Card container */}
+      <div
+        className="
+          relative
+          flex
+          w-[300px]
+          items-center
+          justify-center
+          sm:w-[340px]
+          lg:w-[370px]
+        "
+      >
+        <div
+          className="
+            absolute
+            -inset-3
+            rounded-[28px]
+            border border-sky-400/10
+            bg-sky-400/[0.02]
+            opacity-0
+            blur-sm
+            transition-all duration-500
+            group-hover:opacity-100
+          "
+        />
+
+        <div className="relative z-10">
+          <WrapedCard img={img} />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
