@@ -52,9 +52,9 @@ export const metadata: Metadata = {
   creator: "Ali Ghiasi",
 
   icons: {
-    icon: "/assets/images/93682279.jpg",
-    shortcut: "/assets/images/93682279.jpg",
-    apple: "/assets/images/93682279.jpg",
+    icon: "/assets/images/93682279.png",
+    shortcut: "/assets/images/93682279.png",
+    apple: "/assets/images/93682279.png",
   },
 
   openGraph: {

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Img from "../../../public/assets/images/93682279.jpg";
+import Img from "../../../public/assets/images/93682279.png";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "@mui/material";
 
