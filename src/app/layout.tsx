@@ -6,6 +6,8 @@ import "./globals.css";
 import Providers from "@/store/Providers";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import RegisterSW from "./register-sw";
+import PwaInstallPrompt from "./components/PwaInstallPrompt";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,11 +52,18 @@ export const metadata: Metadata = {
   ],
 
   creator: "Ali Ghiasi",
+  manifest: "/manifest.webmanifest",
 
   icons: {
     icon: "/assets/images/93682279.png",
     shortcut: "/assets/images/93682279.png",
     apple: "/assets/images/93682279.png",
+  },
+
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Ali Ghiasi",
   },
 
   openGraph: {
@@ -79,6 +88,11 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: "#070b12",
+  colorScheme: "dark",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -92,6 +106,8 @@ export default function RootLayout({
                     font-sans antialiased text-white`}
       >
         <Providers>
+          <RegisterSW />
+          <PwaInstallPrompt />
           <Navbar />
 
           <main className="flex min-h-screen flex-1 flex-col pt-16">

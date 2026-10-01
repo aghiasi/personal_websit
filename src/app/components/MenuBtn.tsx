@@ -16,7 +16,23 @@ const links = [
   { label: "Admin", href: "/admin" },
 ];
 
-export default function MenuBtn() {
+type MenuBtnProps = {
+  installPrompt: {
+    prompt: () => Promise<void>;
+    userChoice: Promise<{
+      outcome: "accepted" | "dismissed";
+      platform: string;
+    }>;
+  } | null;
+  onInstall: () => Promise<void>;
+  isInstalled: boolean;
+};
+
+export default function MenuBtn({
+  installPrompt,
+  onInstall,
+  isInstalled,
+}: MenuBtnProps) {
   const [open, setOpen] = useState(false);
 
   const closeMenu = () => {
@@ -134,6 +150,39 @@ export default function MenuBtn() {
               </Link>
             </li>
           ))}
+
+          {!isInstalled && installPrompt && (
+            <li>
+              <button
+                type="button"
+                onClick={async () => {
+                  closeMenu();
+                  await onInstall();
+                }}
+                className="
+                  mt-1
+                  block
+                  w-full
+                  rounded-lg
+                  border
+                  border-emerald-400/30
+                  bg-emerald-400/10
+                  px-4
+                  py-2.5
+                  text-left
+                  text-sm
+                  font-medium
+                  text-emerald-300
+                  transition-all
+                  duration-200
+                  hover:border-emerald-400/60
+                  hover:bg-emerald-400/15
+                "
+              >
+                Install app
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </>
