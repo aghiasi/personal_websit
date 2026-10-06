@@ -1,7 +1,11 @@
 "use client";
 
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
+
+import CloseIcon from "@mui/icons-material/Close";
+
 import { useEffect, useRef, useState } from "react";
+
 import { io, Socket } from "socket.io-client";
 
 interface Message {
@@ -17,31 +21,74 @@ interface User {
 
 interface MessageBoxProps {
   some: boolean;
+  onClose: () => void;
 }
 
 const socket: Socket = io("https://websitsocket.onrender.com/", {
   transports: ["websocket"],
 });
 
-export default function MessageBox({ some }: MessageBoxProps) {
+export default function MessageBox({ some, onClose }: MessageBoxProps) {
   const [user, setUser] = useState<User>({
     name: "",
     room: "",
   });
 
+  const [roomId, setRoomId] = useState("");
+
   const [show, setShow] = useState(false);
+
   const [messages, setMessages] = useState<Message[]>([]);
 
   const name = useRef<HTMLInputElement | null>(null);
+
   const familyName = useRef<HTMLInputElement | null>(null);
+
   const message = useRef<HTMLInputElement | null>(null);
+
   const ul = useRef<HTMLUListElement | null>(null);
 
   /*
-   * Receive messages
+   * Get room + chat history
+   * from chat.json through API.
    */
   useEffect(() => {
-    const handleMessage = ({
+    const getChat = async () => {
+      try {
+        const response = await fetch("/api/chat", {
+          method: "GET",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.roomId) {
+          setRoomId(data.roomId);
+
+          /*
+           * Restore old messages.
+           */
+          if (Array.isArray(data.messages)) {
+            setMessages(data.messages);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load chat:", error);
+      }
+    };
+
+    getChat();
+  }, []);
+
+  /*
+   * Receive Socket.IO messages.
+   */
+  useEffect(() => {
+    const handleMessage = async ({
       name,
       text,
       time,
@@ -50,22 +97,51 @@ export default function MessageBox({ some }: MessageBoxProps) {
       text: string;
       time: string;
     }) => {
-      if (text === "Admin has left the room") {
+      /*
+       * Ignore system messages.
+       */
+      if (
+        text === "Admin has left the room" ||
+        text === "Admin joined the room"
+      ) {
         return;
       }
 
-      if (text === "Admin joined the room") {
-        return;
-      }
+      const newMessage: Message = {
+        name,
+        text,
+        time,
+      };
 
-      setMessages((previousMessages) => [
-        ...previousMessages,
-        {
-          name,
-          text,
-          time,
-        },
-      ]);
+      /*
+       * Show message immediately.
+       */
+      setMessages((previousMessages) => [...previousMessages, newMessage]);
+
+      /*
+       * Save message
+       * into chat.json.
+       */
+      if (roomId) {
+        try {
+          await fetch("/api/chat", {
+            method: "PUT",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              roomId,
+              name,
+              text,
+              time,
+            }),
+          });
+        } catch (error) {
+          console.error("Failed to save message:", error);
+        }
+      }
     };
 
     socket.on("message", handleMessage);
@@ -73,10 +149,10 @@ export default function MessageBox({ some }: MessageBoxProps) {
     return () => {
       socket.off("message", handleMessage);
     };
-  }, []);
+  }, [roomId]);
 
   /*
-   * Auto scroll to the newest message
+   * Auto scroll.
    */
   useEffect(() => {
     if (!ul.current) {
@@ -90,54 +166,112 @@ export default function MessageBox({ some }: MessageBoxProps) {
   }, [messages]);
 
   /*
-   * Join chat room
+   * Start chat.
    */
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const inputName = name.current?.value.trim();
+
     const inputFamilyName = familyName.current?.value.trim();
 
     if (!inputName || !inputFamilyName) {
       return;
     }
 
-    setMessages([]);
+    try {
+      let currentRoomId = roomId;
 
-    setUser({
-      name: inputName,
-      room: inputFamilyName,
-    });
+      /*
+       * Create room if
+       * there isn't one.
+       */
+      if (!currentRoomId) {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+        });
 
-    socket.emit("enterRoom", {
-      name: inputName,
-      room: inputFamilyName,
-    });
+        if (!response.ok) {
+          return;
+        }
 
-    setShow(true);
+        const data = await response.json();
+
+        if (!data.success || !data.roomId) {
+          return;
+        }
+
+        currentRoomId = data.roomId;
+
+        setRoomId(currentRoomId);
+      }
+
+      /*
+       * Save user.
+       */
+      setUser({
+        name: inputName,
+        room: currentRoomId,
+      });
+
+      /*
+       * Join Socket.IO room.
+       */
+      socket.emit("enterRoom", {
+        name: inputName,
+        room: currentRoomId,
+      });
+
+      /*
+       * IMPORTANT:
+       * Don't clear messages.
+       *
+       * Existing history stays.
+       */
+      setShow(true);
+    } catch (error) {
+      console.error("Failed to start chat:", error);
+    }
   };
 
   /*
-   * Send message
+   * Send message.
    */
   const handleMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const inputMessage = message.current?.value.trim();
 
-    if (!inputMessage || !user.name) {
+    if (!inputMessage || !user.name || !roomId) {
       return;
     }
+
+    const time = new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
     socket.emit("message", {
       name: user.name,
       text: inputMessage,
+      time,
     });
 
     if (message.current) {
       message.current.value = "";
+
       message.current.focus();
     }
+  };
+
+  /*
+   * Close chat.
+   *
+   * Cookie stays.
+   * chat.json stays.
+   */
+  const handleClose = () => {
+    onClose();
   };
 
   return (
@@ -160,6 +294,7 @@ export default function MessageBox({ some }: MessageBoxProps) {
         backdrop-blur-xl
         transition-all
         duration-300
+
         ${
           some
             ? "translate-x-0 opacity-100"
@@ -168,6 +303,7 @@ export default function MessageBox({ some }: MessageBoxProps) {
       `}
     >
       {/* Header */}
+
       <div
         className="
           flex
@@ -191,37 +327,65 @@ export default function MessageBox({ some }: MessageBoxProps) {
           </p>
         </div>
 
-        <div
-          className="
-            flex
-            items-center
-            gap-2
-            rounded-full
-            border
-            border-sky-400/20
-            bg-sky-400/10
-            px-3
-            py-1
-            text-[10px]
-            uppercase
-            tracking-wider
-            text-sky-300
-          "
-        >
-          <span
+        <div className="flex items-center gap-3">
+          {/* Online */}
+
+          <div
             className="
-              h-1.5
-              w-1.5
+              flex
+              items-center
+              gap-2
               rounded-full
-              bg-sky-400
-              shadow-[0_0_8px_rgba(56,189,248,0.8)]
+              border
+              border-sky-400/20
+              bg-sky-400/10
+              px-3
+              py-1
+              text-[10px]
+              uppercase
+              tracking-wider
+              text-sky-300
             "
-          />
-          Online
+          >
+            <span
+              className="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-sky-400
+                shadow-[0_0_8px_rgba(56,189,248,0.8)]
+              "
+            />
+            Online
+          </div>
+
+          {/* Close */}
+
+          <IconButton
+            onClick={handleClose}
+            aria-label="Close chat"
+            size="small"
+            sx={{
+              width: 32,
+              height: 32,
+              color: "#9ca3af",
+              border: "1px solid rgba(255,255,255,0.08)",
+              backgroundColor: "rgba(255,255,255,0.03)",
+
+              "&:hover": {
+                color: "#f87171",
+                backgroundColor: "rgba(248,113,113,0.08)",
+                borderColor: "rgba(248,113,113,0.2)",
+              },
+            }}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
         </div>
       </div>
 
       {/* Messages */}
+
       <ul
         ref={ul}
         className="
@@ -234,33 +398,33 @@ export default function MessageBox({ some }: MessageBoxProps) {
           scrollbar-thin
         "
       >
-        {!show && (
+        {!show && messages.length === 0 && (
           <li
             className="
-              mx-auto
-              max-w-[90%]
-              rounded-2xl
-              border
-              border-sky-400/10
-              bg-sky-400/5
-              p-4
-              text-center
-            "
+                mx-auto
+                max-w-[90%]
+                rounded-2xl
+                border
+                border-sky-400/10
+                bg-sky-400/5
+                p-4
+                text-center
+              "
           >
             <div
               className="
-                mx-auto
-                flex
-                h-10
-                w-10
-                items-center
-                justify-center
-                rounded-xl
-                border
-                border-sky-400/20
-                bg-sky-400/10
-                text-sky-300
-              "
+                  mx-auto
+                  flex
+                  h-10
+                  w-10
+                  items-center
+                  justify-center
+                  rounded-xl
+                  border
+                  border-sky-400/20
+                  bg-sky-400/10
+                  text-sky-300
+                "
             >
               💬
             </div>
@@ -273,56 +437,60 @@ export default function MessageBox({ some }: MessageBoxProps) {
 
         {messages.map((item, index) => {
           const isAdmin = item.name === "Admin";
+
           const isCurrentUser = item.name === user.name;
 
           return (
             <li
               key={`${item.time}-${index}`}
               className={`
-                relative
-                max-w-[85%]
-                rounded-2xl
-                border
-                px-4
-                pb-5
-                pt-7
-                text-sm
-                leading-6
-                ${
-                  isAdmin
-                    ? "mx-auto w-[90%] border-sky-400/20 bg-sky-400/10 text-sky-100"
-                    : isCurrentUser
-                      ? "ml-auto border-sky-400/20 bg-sky-400/10 text-gray-200"
-                      : "mr-auto border-white/10 bg-white/[0.04] text-gray-300"
-                }
-              `}
+                  relative
+                  max-w-[85%]
+                  rounded-2xl
+                  border
+                  px-4
+                  pb-5
+                  pt-7
+                  text-sm
+                  leading-6
+
+                  ${
+                    isAdmin
+                      ? "mx-auto w-[90%] border-sky-400/20 bg-sky-400/10 text-sky-100"
+                      : isCurrentUser
+                        ? "ml-auto border-sky-400/20 bg-sky-400/10 text-gray-200"
+                        : "mr-auto border-white/10 bg-white/[0.04] text-gray-300"
+                  }
+                `}
             >
-              {/* Sender */}
               <span
                 className={`
-                  absolute
-                  left-3
-                  top-2
-                  text-[10px]
-                  font-medium
-                  ${isAdmin || isCurrentUser ? "text-sky-300" : "text-gray-500"}
-                `}
+                    absolute
+                    left-3
+                    top-2
+                    text-[10px]
+                    font-medium
+
+                    ${
+                      isAdmin || isCurrentUser
+                        ? "text-sky-300"
+                        : "text-gray-500"
+                    }
+                  `}
               >
                 {item.name}
               </span>
 
-              {/* Message */}
               <span className="block break-words">{item.text}</span>
 
-              {/* Time */}
               <span
                 className="
-                  absolute
-                  bottom-1.5
-                  right-3
-                  text-[10px]
-                  text-gray-600
-                "
+                    absolute
+                    bottom-1.5
+                    right-3
+                    text-[10px]
+                    text-gray-600
+                  "
               >
                 {item.time}
               </span>
@@ -332,13 +500,14 @@ export default function MessageBox({ some }: MessageBoxProps) {
       </ul>
 
       {/* Join form */}
+
       {!show && (
         <form
           onSubmit={handleSubmit}
           id="form-join"
           className="
-            shrink-0
             grid
+            shrink-0
             grid-cols-1
             gap-2
             border-t
@@ -359,12 +528,15 @@ export default function MessageBox({ some }: MessageBoxProps) {
                 color: "#fff",
                 backgroundColor: "rgba(255,255,255,0.03)",
               },
+
               "& .MuiInputLabel-root": {
                 color: "#9ca3af",
               },
+
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(255,255,255,0.1)",
               },
+
               "&:hover .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(56,189,248,0.4)",
               },
@@ -382,12 +554,15 @@ export default function MessageBox({ some }: MessageBoxProps) {
                 color: "#fff",
                 backgroundColor: "rgba(255,255,255,0.03)",
               },
+
               "& .MuiInputLabel-root": {
                 color: "#9ca3af",
               },
+
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(255,255,255,0.1)",
               },
+
               "&:hover .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(56,189,248,0.4)",
               },
@@ -406,6 +581,7 @@ export default function MessageBox({ some }: MessageBoxProps) {
               color: "#7dd3fc",
               boxShadow: "none",
               textTransform: "none",
+
               "&:hover": {
                 backgroundColor: "rgba(56,189,248,0.18)",
                 borderColor: "rgba(56,189,248,0.4)",
@@ -419,13 +595,14 @@ export default function MessageBox({ some }: MessageBoxProps) {
       )}
 
       {/* Message form */}
+
       {show && (
         <form
           onSubmit={handleMessage}
           id="form-ms"
           className="
-            shrink-0
             flex
+            shrink-0
             gap-2
             border-t
             border-white/10
@@ -445,15 +622,19 @@ export default function MessageBox({ some }: MessageBoxProps) {
                 color: "#fff",
                 backgroundColor: "rgba(255,255,255,0.03)",
               },
+
               "& .MuiInputLabel-root": {
                 color: "#9ca3af",
               },
+
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(255,255,255,0.1)",
               },
+
               "&:hover .MuiOutlinedInput-notchedOutline": {
                 borderColor: "rgba(56,189,248,0.4)",
               },
+
               "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                 {
                   borderColor: "#38bdf8",
@@ -472,6 +653,7 @@ export default function MessageBox({ some }: MessageBoxProps) {
               color: "#7dd3fc",
               boxShadow: "none",
               textTransform: "none",
+
               "&:hover": {
                 backgroundColor: "rgba(56,189,248,0.18)",
                 borderColor: "rgba(56,189,248,0.4)",

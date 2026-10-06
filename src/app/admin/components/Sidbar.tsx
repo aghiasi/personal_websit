@@ -1,128 +1,391 @@
 "use client";
+
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuIcon from "@mui/icons-material/Menu";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logoutHandle } from "@/libs/logoutHandle";
 import { useState } from "react";
+
 export default function Sidbar() {
   const pathname = usePathname();
-  const [show , setShow] = useState(false)
+  const [show, setShow] = useState(false);
+
+  const isActive = (path: string) => {
+    if (path === "/admin") {
+      return pathname === "/admin";
+    }
+
+    return pathname.startsWith(path);
+  };
+
+  const closeMobile = () => {
+    setShow(false);
+  };
+
   return (
     <>
-
+      {/* ========================================
+          Mobile menu button
+      ======================================== */}
       <button
-        data-drawer-target="sidebar-multi-level-sidebar"
-        data-drawer-toggle="sidebar-multi-level-sidebar"
-        aria-controls="sidebar-multi-level-sidebar"
         type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        onClick={()=>setShow(!show)}
+        aria-label={show ? "Close sidebar" : "Open sidebar"}
+        onClick={() => setShow(!show)}
+        className="
+          fixed
+          left-4
+          top-4
+          z-50
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
+          rounded-xl
+          border
+          border-white/10
+          bg-[#070b12]/90
+          text-gray-400
+          shadow-lg
+          backdrop-blur-md
+          transition-all
+          hover:border-sky-400/30
+          hover:bg-sky-400/10
+          hover:text-sky-300
+          sm:hidden
+        "
       >
-        <span className="sr-only text-gray-700">Open sidebar</span>
-        <svg
-          className="w-6 h-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clipRule="evenodd"
-            fillRule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
-        </svg>
+        {show ? <CloseIcon fontSize="small" /> : <MenuIcon fontSize="small" />}
       </button>
+
+      {/* ========================================
+          Mobile overlay
+      ======================================== */}
+      {show && (
+        <button
+          type="button"
+          aria-label="Close sidebar"
+          onClick={closeMobile}
+          className="
+            fixed
+            inset-0
+            z-40
+            bg-black/60
+            backdrop-blur-[2px]
+            sm:hidden
+          "
+        />
+      )}
+
+      {/* ========================================
+          Sidebar
+      ======================================== */}
       <aside
-        id="default-sidebar"
-        className="fixed top-0 left-0 z-40 hover:w-64 h-screen  transition-transform -translate-x-full sm:translate-x-0 "
+        className={`
+          fixed
+          left-0
+          top-0
+          z-50
+          h-screen
+          w-64
+          transform
+          border-r
+          border-white/10
+          bg-[#070b12]
+          shadow-[20px_0_60px_rgba(0,0,0,0.25)]
+          transition-transform
+          duration-300
+          sm:translate-x-0
+          ${show ? "translate-x-0" : "-translate-x-full"}
+        `}
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <ul className="space-y-2 font-medium ">
-            <li>
-              <Link
-                href="/admin"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                aria-disabled={pathname == "/admin" && true}
+        {/* Background glow */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            left-0
+            top-0
+            h-64
+            w-full
+            bg-sky-500/[0.04]
+            blur-3xl
+          "
+        />
+
+        <div className="relative flex h-full flex-col px-3 py-5">
+          {/* ========================================
+              Logo / title
+          ======================================== */}
+          <div className="mb-8 px-3">
+            <div className="flex items-center gap-3">
+              <div
+                className="
+                  flex
+                  h-9
+                  w-9
+                  items-center
+                  justify-center
+                  rounded-xl
+                  border
+                  border-sky-400/20
+                  bg-sky-400/10
+                  text-sky-300
+                  shadow-[0_0_20px_rgba(56,189,248,0.08)]
+                "
               >
-                <DashboardIcon />
-                <span className="ms-3 side_span ">Dashboard</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admin/inbox"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <ForwardToInboxIcon />
-                <span className="ms-3 side_span">Inbox</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/"}
-                className="flex items-center p-2 cursor-pointer text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <HomeIcon />
-                <span className="flex-1 ms-3 side_span ">Home</span>
-              </Link>
-            </li>
-            <li>
-              <a
-                onClick={logoutHandle}
-                className="flex items-center p-2 cursor-pointer text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <LogoutIcon />
-                <span className="flex-1 ms-3 side_span ">Logout</span>
-              </a>
-            </li>
-          </ul>
+                <DashboardIcon fontSize="small" />
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-white">Admin</p>
+
+                <p className="text-[10px] uppercase tracking-[0.15em] text-gray-600">
+                  Control Panel
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================
+              Navigation
+          ======================================== */}
+          <nav className="flex-1">
+            <p
+              className="
+                mb-3
+                px-3
+                text-[10px]
+                font-medium
+                uppercase
+                tracking-[0.2em]
+                text-gray-600
+              "
+            >
+              Navigation
+            </p>
+
+            <ul className="space-y-1.5">
+              {/* ========================================
+                  Dashboard
+              ======================================== */}
+              <li>
+                <Link
+                  href="/admin"
+                  onClick={closeMobile}
+                  className={`
+                    group
+                    relative
+                    flex
+                    items-center
+                    gap-3
+                    rounded-xl
+                    px-3
+                    py-3
+                    text-sm
+                    transition-all
+                    duration-200
+                    ${
+                      isActive("/admin")
+                        ? "border border-sky-400/10 bg-sky-400/10 text-sky-300"
+                        : "border border-transparent text-gray-400 hover:bg-white/[0.04] hover:text-gray-200"
+                    }
+                  `}
+                >
+                  {isActive("/admin") && (
+                    <span
+                      className="
+                        absolute
+                        left-0
+                        top-1/2
+                        h-5
+                        w-[2px]
+                        -translate-y-1/2
+                        rounded-full
+                        bg-sky-400
+                        shadow-[0_0_10px_rgba(56,189,248,0.8)]
+                      "
+                    />
+                  )}
+
+                  <DashboardIcon fontSize="small" />
+
+                  <span>Dashboard</span>
+                </Link>
+              </li>
+
+              {/* ========================================
+                  Existing Inbox
+                  DO NOT CHANGE
+              ======================================== */}
+              <li>
+                <Link
+                  href="/admin/inbox"
+                  onClick={closeMobile}
+                  className={`
+                    group
+                    relative
+                    flex
+                    items-center
+                    gap-3
+                    rounded-xl
+                    px-3
+                    py-3
+                    text-sm
+                    transition-all
+                    duration-200
+                    ${
+                      isActive("/admin/inbox")
+                        ? "border border-sky-400/10 bg-sky-400/10 text-sky-300"
+                        : "border border-transparent text-gray-400 hover:bg-white/[0.04] hover:text-gray-200"
+                    }
+                  `}
+                >
+                  {isActive("/admin/inbox") && (
+                    <span
+                      className="
+                        absolute
+                        left-0
+                        top-1/2
+                        h-5
+                        w-[2px]
+                        -translate-y-1/2
+                        rounded-full
+                        bg-sky-400
+                        shadow-[0_0_10px_rgba(56,189,248,0.8)]
+                      "
+                    />
+                  )}
+
+                  <ForwardToInboxIcon fontSize="small" />
+
+                  <span>Inbox</span>
+                </Link>
+              </li>
+
+              {/* ========================================
+                  Contact Messages
+                  NEW
+              ======================================== */}
+              <li>
+                <Link
+                  href="/admin/messages"
+                  onClick={closeMobile}
+                  className={`
+                    group
+                    relative
+                    flex
+                    items-center
+                    gap-3
+                    rounded-xl
+                    px-3
+                    py-3
+                    text-sm
+                    transition-all
+                    duration-200
+                    ${
+                      isActive("/admin/messages")
+                        ? "border border-sky-400/10 bg-sky-400/10 text-sky-300"
+                        : "border border-transparent text-gray-400 hover:bg-white/[0.04] hover:text-gray-200"
+                    }
+                  `}
+                >
+                  {isActive("/admin/messages") && (
+                    <span
+                      className="
+                        absolute
+                        left-0
+                        top-1/2
+                        h-5
+                        w-[2px]
+                        -translate-y-1/2
+                        rounded-full
+                        bg-sky-400
+                        shadow-[0_0_10px_rgba(56,189,248,0.8)]
+                      "
+                    />
+                  )}
+
+                  <MailOutlineIcon fontSize="small" />
+
+                  <span>Messages</span>
+                </Link>
+              </li>
+
+              {/* ========================================
+                  Home
+              ======================================== */}
+              <li>
+                <Link
+                  href="/"
+                  onClick={closeMobile}
+                  className="
+                    group
+                    flex
+                    items-center
+                    gap-3
+                    rounded-xl
+                    border
+                    border-transparent
+                    px-3
+                    py-3
+                    text-sm
+                    text-gray-400
+                    transition-all
+                    duration-200
+                    hover:bg-white/[0.04]
+                    hover:text-gray-200
+                  "
+                >
+                  <HomeIcon fontSize="small" />
+
+                  <span>Home</span>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* ========================================
+              Bottom section
+          ======================================== */}
+          <div className="border-t border-white/10 pt-4">
+            <button
+              type="button"
+              onClick={logoutHandle}
+              className="
+                group
+                flex
+                w-full
+                items-center
+                gap-3
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-sm
+                text-gray-500
+                transition-all
+                duration-200
+                hover:border-red-400/10
+                hover:bg-red-400/[0.05]
+                hover:text-red-300
+              "
+            >
+              <LogoutIcon fontSize="small" />
+
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </aside>
-        {show && 
-          <ul className="space-y-2 font-medium ">
-            <li>
-              <Link
-                href="/admin"
-                className="flex items-center p-2 text-gray-900   hover:bg-gray-100 bg-gray-200 group"
-                aria-disabled={pathname == "/admin" && true}
-              >
-                <DashboardIcon />
-                <span className="ms-3  ">Dashboard</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admin/inbox"
-                className="flex items-center p-2 text-gray-900  hover:bg-gray-100 bg-gray-200 group"
-              >
-                <ForwardToInboxIcon />
-                <span className="ms-3 ">Inbox</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/"}
-                className="flex items-center p-2 cursor-pointer text-gray-900  hover:bg-gray-100 bg-gray-200 group"
-              >
-                <HomeIcon />
-                <span className="flex-1 ms-3 ">Home</span>
-              </Link>
-            </li>
-            <li>
-              <a
-                onClick={logoutHandle}
-                className="flex items-center p-2 cursor-pointer text-gray-900   hover:bg-gray-100 bg-gray-200 group"
-              >
-                <LogoutIcon />
-                <span className="flex-1 ms-3  ">Logout</span>
-              </a>
-            </li>
-          </ul>
-        }
     </>
   );
 }
